@@ -1,0 +1,38 @@
+﻿<ion-view>
+        <ion-content padding="true" scroll="false">
+            <div class="coverContainer">
+                <a ng-click="goRecherche()"  class="return"><i class="fa fa-reply"></i></a>
+                <a ng-click="sendInvi()" ng-hide="isFriendOrInvited" ng-href="#recherche" class="flagIt"><i class="fa fa-vimeo"></i></a>
+                <img src="img/pic6.jpg">
+                <div class="profileInfo">
+                    <div class="container-fluid">
+                        <div class="col-xs-8">{{personne.surnom}} , {{personne.age}}</div>
+                        <div class="col-xs-4 text-right">({{personne.profile}})</div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid spaceIt">
+                {{personne.description}}
+            </div>
+            <div class="container-fluid">
+                <div class="col-xs-8">
+                    <p>Fumeur : {{personne.fumeur}}</p>
+                    <p>Alcool : {{personne.alcool}} </p>
+                    <p>Enfants : {{personne.enfants}}</p>
+                </div>
+                <div class="col-xs-4 personaltyIcon">
+                    <img src="img/icon.png">
+                </div>
+            </div>
+        </ion-content>
+        <ion-footer-bar keyboard-attach>
+            <div class="tabs">
+                <a class="tab-item">
+                    <i class="icon ion-social-vimeo" ng-click="goRecherche()"></i>
+                </a>
+                <a class="tab-item">
+                    <i class="icon ion-close" ng-click="goRecherche()"></i>
+                </a>
+            </div>
+        </ion-footer-bar>
+    </ion-view>

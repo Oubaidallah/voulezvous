@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Questioner</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="container">
+		<div class="question text-center" ng-repeat="q in questions">test
+            <div class="list card" >
+                <a >
+                    <h2>{{getRandomSpan}}</h2>
+                </a>
+            </div>		
+        </div>
+		<div class="checkMarks">
+			<div class="lgCercle greenCercle"></div>
+			<div class="mdCercle greenCercle"></div>
+			<div class="smCercle greenCercle"></div>
+			<div class="xsCercle greyCercle"></div>
+			<div class="smCercle purpleCercle"></div>
+			<div class="mdCercle purpleCercle"></div>
+			<div class="lgCercle purpleCercle"></div>
+		</div>
+		<div class="helpers">
+			<div class="col-xs-6 greenText">Aprove</div>
+			<div class="col-xs-6 redText text-right">Disaprove</div>
+		</div>
+		<div class="submitBtn col-xs-6 col-xs-offset-3">
+			<button class="btn btn-block btn-danger">Suivant</button>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="js/cercleCtrl.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿<ion-view>
+    <ion-content class="padding">
+        <div class="container-fluid">
+            <div class="col-xs-4 col-xs-offset-4" id="profilePic">
+                <img src="/img/profilee.jpg" ng-click="goMonprofile()">
+            </div>
+        </div>
+        <div class="list" >
+            <div class="item item-input-inset"> 
+                <label class="item-input-wrapper" >
+                    <input type="text" placeholder="Pseudo" ng-model="personne.surnom">
+                </label>
+            </div>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="Compteur de crédits : {{personne.nbr_credit}}" disabled>
+                </label>
+            </div>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="Profil MBTI : {{personne.profile}}" disabled>
+                </label>
+                <button class="button button-small button-positive" ng-click="goProfile()">
+                     <i class="icon ion-loop"></i>
+                </button>
+            </div>
+            <div class="item item-input-inset">
+                    <textarea style="width: 300px; height: 150px;" placeholder="Description" class="form-control" ng-model="personne.description"></textarea>
+            </div>
+        </div>
+                <button class="button button-full button-positive" ng-click="editProfile()">
+                    Update
+                </button>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="js/masonry.pkgd.min.js"></script>
+        <script>
+		    $('.grid').masonry({
+			    itemSelector: '.card',
+  			    percentPosition: true
+		    });
+        </script>
+    </ion-content>
+</ion-view>

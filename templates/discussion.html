@@ -1,0 +1,28 @@
+﻿<ion-view >
+    <ion-content padding="true">
+        <div ng-repeat="m in messages">
+            <div ng-if="m.msg_emetteurid == currentUser.id">
+                <div class="bubble you">
+                    {{ m.msg_emetteurid }}
+                </div>
+            </div>
+            <div style="clear:both"></div>
+            <div  ng-if="m.msg_recepteurid == currentUser.id">
+                <div class="bubble me">
+                    {{ m.msg_emetteurid }}
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </ion-content>    
+</ion-view>
+<ion-footer-bar class="bar-subfooter">
+    <div class="bar bar-header item-input-inset">
+        <label class="item-input-wrapper">
+            <input type="search" placeholder="Tapez un message" ng-model="m.message">
+        </label>
+        <button class="button" type="submit" ng-click="addMessage()">
+            Envoyer
+        </button>
+    </div>
+</ion-footer-bar><ion-footer-bar>
