@@ -4693,7 +4693,7 @@ a.subdued {
   background-image: none; }
 
 .tabs-striped.tabs-background-voulezvous .tabs {
-  background-color: #ffe4e1;
+  background-color: #C81E66;
   background-image: none; }
 
 .tabs-striped.tabs-color-light .tab-item {
@@ -5294,7 +5294,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
   pointer-events: none; }
 
 .menu-open .menu-content .scroll-content:not(.overflow-scroll) {
-  overflow: hidden; }
+  overflow: auto; }
 
 .grade-b .menu-content,
 .grade-c .menu-content {

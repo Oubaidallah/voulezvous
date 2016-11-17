@@ -57,6 +57,10 @@
         $state.go("profile");
     }
 
+    $scope.reloadRoute = function () {
+        $route.reload();
+    }
+
     $http.get('http://localhost/api.php/invitation/').
         then(
             function (r) { console.log(r.data); $scope.invitations = r.data; },
@@ -80,9 +84,8 @@
     $scope.date = new Date();
     $scope.addMessage = function () {
         $http.post('http://localhost/api.php/message/',
-            { "msg_emetteurid": "2", "msg_recepteurid": "1", "message": "tessggggs", "msg_timedatedenvoi": "16/11/05 11:25:28" },
+            { "msg_emetteurid": "2", "msg_recepteurid": "1", "message": "tesst from 2 to 1", "msg_timedatedenvoi": "16/11/05 11:25:28" },
             { "Content-Type": "application/json" }).then(function (s) { loadData(); }, function (e) { console.log(e); })
-
     }
 
     $scope.getProfile = function (prof_id) {

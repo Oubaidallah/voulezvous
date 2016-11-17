@@ -1,6 +1,6 @@
-﻿<ion-view cache-view="false">
+﻿<ion-view cache-view="false" overflow-scroll="false">
     <ion-content class="padding">
-        <div ng-click="goRecherchePerso()">
+        <div ng-click="goRecherchePerso()" >
             <li class="item item-toggle">
                 Ma recherche
                 <label class="toggle toggle-positive">
@@ -16,7 +16,7 @@
                 <div class="profileWrapper">
                     <div class="picHolder">
                         <div class="close-btn" ng-init="getImgUrl()"><a ng-hide="">X</a></div>
-                        <img ng-src="{{myImgUrl}}" >
+                        <img src="../img/pic5.jpg" >
                             {{p.surnom}}, {{p.age}}
                         </div>
                     </div>
