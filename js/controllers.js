@@ -25,7 +25,7 @@
         )
 })
 
-.controller('MyprofCtrl', function ($scope, $http, $state) {
+.controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate) {
     $http.get('http://localhost/api.php/recherche/').
         then(
             function (r) { console.log(r.data); $scope.recherches = r.data; },
@@ -39,7 +39,7 @@
     $scope.editProfile = function () {
         $http.put('http://localhost/api.php/personne/' + $scope.personne.id,
             { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
-            { "Content-Type": "application/json" }).then(function (s) { $state.go("profile"); }, function (e) { console.log(e); })
+            { "Content-Type": "application/json" }).then(function (s) { $state.go("monprofile"); }, function (e) { console.log(e); })
     }
     $scope.editRechercheValue = function () {
         $http.put('http://localhost/api.php/personne/' + $scope.personne.id,

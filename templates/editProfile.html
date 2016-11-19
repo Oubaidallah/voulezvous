@@ -1,5 +1,33 @@
 ﻿<ion-view>
-    <ion-content class="padding">
+    <ion-content class="padding" scroll="false">
+        <!--<div>
+            <ion-view id="image-view">
+                <ion-slide-box show-pager="true">
+                    <ion-slide>
+                        <div class="container-fluid">
+                            <div class="col-xs-4 col-xs-offset-4" id="profilePic">
+                                <img src="../img/match.jpg" ng-click="goMonprofile()">
+                            </div>
+                        </div>
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="container-fluid">
+                            <div class="col-xs-4 col-xs-offset-4" id="profilePic">
+                                <img src="../img/icon.png" ng-click="goMonprofile()">
+                            </div>
+                        </div>         
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="container-fluid">
+                            <div class="col-xs-4 col-xs-offset-4" id="profilePic">
+                                <img src="../img/profile.jpg" ng-click="goMonprofile()">
+                            </div>
+                        </div>                    
+                    </ion-slide>
+                </ion-slide-box>
+            </ion-view>
+        </div>
+            -->
         <div class="container-fluid">
             <div class="col-xs-4 col-xs-offset-4" id="profilePic">
                 <img src="/img/profilee.jpg" ng-click="goMonprofile()">
@@ -20,12 +48,14 @@
                 </button>
             </div>
             <div class="item item-input-inset">
-                    <textarea style="width: 300px; height: 150px;" placeholder="Description" class="form-control" ng-model="personne.description"></textarea>
+                    <textarea style="width: 300px; height: 100px;" placeholder="Description" class="form-control" ng-model="personne.description"></textarea>
             </div>
         </div>
-                <button class="button button-full button-positive" ng-click="editProfile()">
-                    Modifier
-                </button>
+        <div class="button-full">
+            <button class="button button-full button-positive" ng-click="editProfile()">
+                Modifier
+            </button>
+        </div>     
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="js/masonry.pkgd.min.js"></script>
         <script>
