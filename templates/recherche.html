@@ -11,11 +11,11 @@
                 </label>
             </li>
         </div>
-        <div class="grid" ng-click="goInvitDetails(p.id)" ng-repeat="p in personnes | filter:search">
+        <div class="grid" ng-repeat="p in personnes.personne | filter:search" ng-click="goInvitDetails(p.id)">
             <div class="card" ng-if="p.id !='1'" >
                 <div class="profileWrapper">
                     <div class="picHolder">
-                        <div class="close-btn" ng-init="getImgUrl()"><a ng-hide="">X</a></div>
+                        <div class="close-btn" ><a ng-hide="">X</a></div>
                         <img src="../img/pic5.jpg" >
                             {{p.surnom}}, {{p.age}}
                         </div>

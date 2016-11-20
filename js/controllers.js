@@ -13,8 +13,8 @@
     $scope.goRecherchePerso = function () { $state.go("recherchePerso"); }
     $scope.goCredit = function () { $state.go("credit"); }
 
-     // call to get the user and set it to your scope variable
-        //ngUserService.getUser(function(user){$scope.currentUser = user;});
+    // call to get the user and set it to your scope variable
+    //ngUserService.getUser(function(user){$scope.currentUser = user;});
 
 }) // ligne hethi bch zedna un controlleur lel module récupéré
 
@@ -50,7 +50,7 @@
 })
 
 .controller('MsgCtrl', function ($scope, $http, UserService, $state, GetUserId) {
-    
+
     $scope.goInvitDetails = function (userClickedId) {
         GetUserId.userId = userClickedId;
         console.log(GetUserId);
@@ -95,14 +95,13 @@
             function (e) { console.log(e) }
         )
     }
-    $scope.getImgUrl=function()
-    {
+    $scope.getImgUrl = function () {
         UserService.getAllUser().then(
             function (r) { console.log(r.data); $scope.personnes = r.data; },
             function (e) { console.log(e) }
         )
-        $scope.myImgUrl= personnes.img ;
-        }
+        $scope.myImgUrl = personnes.img;
+    }
 
 })
 
@@ -122,9 +121,18 @@
         )
 })
 
-.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId) {
+.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId, FriendsService) {
 
-    $scope.isFriendOrInvited = false;
+    FriendsService.checkInvit(1, GetUserId.userId).then(
+        function (r) {
+            if (!$.trim(r))
+                $scope.isFriendOrInvited = false;
+            else
+                $scope.isFriendOrInvited = true;
+        },
+            function (e) { console.log(e) }
+        )
+
     UserService.getAllUser().then(
             function (r) { console.log(r.data); $scope.personnes = r.data; },
             function (e) { console.log(e) }
@@ -149,17 +157,15 @@
             function (e) { console.log(e) }
         );
 
-
-
-
     $scope.sendInvi = function () {
-        
+
         $http.post('http://localhost/api.php/invitation/',
             { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": "2", "inv_emetteurid": $scope.currentUser.id },
             { "Content-Type": "application/json" }).then(function (s) { loadData(); }, function (e) { console.log(e); })
-
     }
-    
+
+
+
 })
 
 .factory('GetUserId', function () {
