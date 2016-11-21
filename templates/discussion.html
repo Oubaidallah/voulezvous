@@ -1,6 +1,6 @@
 ﻿<ion-view >
     <ion-content padding="true">
-        <div ng-repeat="m in messages">
+        <div ng-repeat="m in messages.message">
             <div ng-if="m.msg_emetteurid == currentUser.id">
                 <div class="bubble you">
                     {{ m.msg_emetteurid }}

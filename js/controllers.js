@@ -26,23 +26,23 @@
 })
 
 .controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate) {
-    $http.get('http://localhost/api.php/recherche/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/').
         then(
             function (r) { console.log(r.data); $scope.recherches = r.data; },
             function (e) { console.log(e) }
         )
-    $http.get('http://localhost/api.php/personne/1').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/1').
         then(
             function (r) { console.log(r.data); $scope.personne = r.data; },
             function (e) { console.log(e) }
         );
     $scope.editProfile = function () {
-        $http.put('http://localhost/api.php/personne/' + $scope.personne.id,
+        $http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.personne.id,
             { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
             { "Content-Type": "application/json" }).then(function (s) { $state.go("monprofile"); }, function (e) { console.log(e); })
     }
     $scope.editRechercheValue = function () {
-        $http.put('http://localhost/api.php/personne/' + $scope.personne.id,
+        $http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.personne.id,
             { "rechercheValue": $scope.personne.recherche },
             { "Content-Type": "application/json" }).then(function (s) { $state.go("profile"); }, function (e) { console.log(e); })
     }
@@ -61,12 +61,12 @@
         $route.reload();
     }
 
-    $http.get('http://localhost/api.php/invitation/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/').
         then(
             function (r) { console.log(r.data); $scope.invitations = r.data; },
             function (e) { console.log(e) }
         )
-    $http.get('http://localhost/api.php/message/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message/').
         then(
             function (r) { console.log(r.data); $scope.messages = r.data; },
             function (e) { console.log(e) }
@@ -83,13 +83,13 @@
         )
     $scope.date = new Date();
     $scope.addMessage = function () {
-        $http.post('http://localhost/api.php/message/',
+        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/message/',
             { "msg_emetteurid": "2", "msg_recepteurid": "1", "message": "tesst from 2 to 1", "msg_timedatedenvoi": "16/11/05 11:25:28" },
             { "Content-Type": "application/json" }).then(function (s) { loadData(); }, function (e) { console.log(e); })
     }
 
     $scope.getProfile = function (prof_id) {
-        $http.get('http://localhost/api.php/personne/' + prof_id).
+        $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + prof_id).
         then(
             function (r) { console.log(r.data); $scope.personnes = r.data; alert(personnes); },
             function (e) { console.log(e) }
@@ -106,7 +106,7 @@
 })
 
 .controller('QueCtrl', function ($scope, $http) {
-    $http.get('http://localhost/api.php/question/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/question/').
         then(
             function (r) { console.log(r.data); $scope.questions = r.data; },
             function (e) { console.log(e) }
@@ -114,7 +114,7 @@
 })
 
 .controller('HomeCtrl', function ($scope, $http) {
-    $http.get('http://localhost/api.php/personne/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/').
         then(
             function (r) { console.log(r.data); $scope.personnes = r.data; },
             function (e) { console.log(e) }
@@ -123,7 +123,7 @@
 
 .controller('ProfCtrl', function ($scope, $http, UserService, GetUserId, FriendsService) {
 
-    FriendsService.checkInvit(1, GetUserId.userId).then(
+    /*FriendsService.checkInvit(1, GetUserId.userId).then(
         function (r) {
             if (!$.trim(r))
                 $scope.isFriendOrInvited = false;
@@ -131,7 +131,7 @@
                 $scope.isFriendOrInvited = true;
         },
             function (e) { console.log(e) }
-        )
+        )*/
 
     UserService.getAllUser().then(
             function (r) { console.log(r.data); $scope.personnes = r.data; },
@@ -143,13 +143,13 @@
             function (e) { console.log(e) }
         )
 
-    $http.get('http://localhost/api.php/personne/' + GetUserId.userId).
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + GetUserId.userId).
         then(
             function (r) { console.log(r.data); $scope.personne = r.data; },
             function (e) { console.log(e) }
         );
 
-    $http.get('http://localhost/api.php/invitation/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/').
         then(
             function (r) {
                 console.log(r.data); $scope.invitation = r.data;
@@ -159,7 +159,7 @@
 
     $scope.sendInvi = function () {
 
-        $http.post('http://localhost/api.php/invitation/',
+        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
             { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": "2", "inv_emetteurid": $scope.currentUser.id },
             { "Content-Type": "application/json" }).then(function (s) { loadData(); }, function (e) { console.log(e); })
     }

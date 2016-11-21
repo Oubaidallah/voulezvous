@@ -1,8 +1,8 @@
 ﻿<ion-view cache-view="false">
     <ion-content class="padding">
         <div class="item item-divider" align="left">Historique ... </div>
-        <div class="list" ng-repeat="m in messages">
-            <a class="item item-avatar" style="border:hidden;" ng-repeat="p in personnes | filter:{id:m.msg_emetteurid}" >
+        <div class="list" ng-repeat="m in messages.message">
+            <a class="item item-avatar" style="border:hidden;" ng-repeat="p in personnes.personne | filter:{id:m.msg_emetteurid}" >
                 <img src="../img/who-am-i.jpg" ng-click="goDiscussion()">
                 <p>{{p.surnom}}</p>
             </a>
