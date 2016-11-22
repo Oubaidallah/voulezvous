@@ -90,6 +90,11 @@ angular.module('starter', ['ionic'])
         templateUrl: 'templates/credit.html',
         controller: 'MyprofCtrl'
     })
+    .state('invitation', {
+        url: '/invitation',
+        templateUrl: 'templates/invitation.html',
+        controller: 'ProfCtrl'
+    })
 
     $urlRouterProvider.otherwise(function ($injector, $location) {
         var $state = $injector.get("$state");

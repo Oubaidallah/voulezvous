@@ -12,17 +12,29 @@
     $scope.goHistorique = function () { $state.go("historique"); }
     $scope.goRecherchePerso = function () { $state.go("recherchePerso"); }
     $scope.goCredit = function () { $state.go("credit"); }
+    $scope.goInvitation = function () { $state.go("invitation"); }
 
     // call to get the user and set it to your scope variable
     //ngUserService.getUser(function(user){$scope.currentUser = user;});
 
 }) // ligne hethi bch zedna un controlleur lel module récupéré
 
-.controller('index', function ($scope, $http, UserService) {
+.controller('index', function ($scope, $http, UserService, $ionicPopup) {
     UserService.getCurrentUser().then(
             function (r) { console.log(r.data); $scope.currentUser = r.data; },
             function (e) { console.log(e) }
         )
+    $scope.showAlert = function () {
+
+        var alertPopup = $ionicPopup.alert({
+            title: 'VoulezVous plus des points crédits ?',
+            template: 'Petite surprise qui arrive bientôt ! :D'
+        });
+
+        alertPopup.then(function (res) {
+            // Custom functionality....
+        });
+    };
 })
 
 .controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate) {
@@ -61,12 +73,12 @@
         $route.reload();
     }
 
-    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
         then(
             function (r) { console.log(r.data); $scope.invitations = r.data; },
             function (e) { console.log(e) }
         )
-    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message?transform=1').
         then(
             function (r) { console.log(r.data); $scope.messages = r.data; },
             function (e) { console.log(e) }
@@ -81,7 +93,6 @@
             function (r) { console.log(r.data); $scope.currentUser = r.data; },
             function (e) { console.log(e) }
         )
-    $scope.date = new Date();
     $scope.addMessage = function () {
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/message/',
             { "msg_emetteurid": "2", "msg_recepteurid": "1", "message": "tesst from 2 to 1", "msg_timedatedenvoi": "16/11/05 11:25:28" },
@@ -95,6 +106,7 @@
             function (e) { console.log(e) }
         )
     }
+
     $scope.getImgUrl = function () {
         UserService.getAllUser().then(
             function (r) { console.log(r.data); $scope.personnes = r.data; },
@@ -149,7 +161,7 @@
             function (e) { console.log(e) }
         );
 
-    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
         then(
             function (r) {
                 console.log(r.data); $scope.invitation = r.data;
@@ -158,13 +170,28 @@
         );
 
     $scope.sendInvi = function () {
-
+        
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
-            { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": "2", "inv_emetteurid": $scope.currentUser.id },
+            { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id },
             { "Content-Type": "application/json" }).then(function (s) { loadData(); }, function (e) { console.log(e); })
     }
 
+    /*$scope.verifInvi = function () {
+        $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
+        then(
+            function (r) {
+                $scope.invitation = r.data;
+                if ($scope.invitation.envoyer == '1') {
+                    console.log(r.data); alert('ok envoyer');
+                    if ($scope.invitation.inv_emetteurid == $scope.currentUser.id && $scope.invitation.inv_recepteurid == GetUserId.userId) {
+                        console.log(r.data); alert('ok2');
+                    }
+                }
 
+            },
+            function (e) { console.log(e) }
+        );
+    }*/
 
 })
 

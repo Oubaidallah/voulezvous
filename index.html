@@ -42,14 +42,14 @@
 <body ng-app="starter" ng-controller="AppCtrl">
     <ion-header-bar align-title="left" class="bar bar-header bar-light">
         <div class="buttons" ng-controller="index">
-            <button class="button" style="background-color:#EFD807" >
-                20 V
-            </button>
+            <!--<button class="button" style="background-color:#EFD807" ng-click="goCredit()">-->
+                <button class="button" style="background-color:#EFD807" ng-click = "showAlert()">
+                    20 V
+                </button>
         </div>
         <div class="buttons" ng-controller="index">
             <h1 class="title" >Voulez Vous ?</h1>
-
-            <button class="button" ng-click="goCredit()">
+            <button class="button" >
                 {{currentUser.nbr_credit}} V
             </button>
         </div>
