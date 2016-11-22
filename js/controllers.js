@@ -137,13 +137,15 @@
 
     /*FriendsService.checkInvit(1, GetUserId.userId).then(
         function (r) {
-            if (!$.trim(r))
-                $scope.isFriendOrInvited = false;
-            else
+            if ((GetUserId.userId ==  r.inv_recepteurid) && ($scope.invitations.inv_emetteurid == $scope.currentUser.id))
                 $scope.isFriendOrInvited = true;
+            else
+                $scope.isFriendOrInvited = false;
         },
             function (e) { console.log(e) }
         )*/
+
+    $scope.isFriendOrInvited = false;
 
     UserService.getAllUser().then(
             function (r) { console.log(r.data); $scope.personnes = r.data; },
@@ -164,7 +166,7 @@
     $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
         then(
             function (r) {
-                console.log(r.data); $scope.invitation = r.data;
+                console.log(r.data); $scope.invitations = r.data;
             },
             function (e) { console.log(e) }
         );
@@ -173,25 +175,9 @@
         
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
             { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id },
-            { "Content-Type": "application/json" }).then(function (s) { loadData(); }, function (e) { console.log(e); })
+            { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
+        $scope.goInvitation();
     }
-
-    /*$scope.verifInvi = function () {
-        $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
-        then(
-            function (r) {
-                $scope.invitation = r.data;
-                if ($scope.invitation.envoyer == '1') {
-                    console.log(r.data); alert('ok envoyer');
-                    if ($scope.invitation.inv_emetteurid == $scope.currentUser.id && $scope.invitation.inv_recepteurid == GetUserId.userId) {
-                        console.log(r.data); alert('ok2');
-                    }
-                }
-
-            },
-            function (e) { console.log(e) }
-        );
-    }*/
 
 })
 

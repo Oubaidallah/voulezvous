@@ -1,46 +1,47 @@
 ﻿<ion-view cache-view="false">
     <ion-content class="padding">
         <div class="item item-divider" align="left">Je veux quitter le site avec ... </div>
-        <div class="list" >
-            <div>
+        <div class="list" ng-repeat="i in invitations.invitation | filter:{accepter:'1'} | filter:{inv_recepteurid:currentUser.id}">
+            <div ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}">
                 <a class="item item-avatar" style="border:hidden;">
                     <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>{{i.accepter}}</p>
-                </a>
-            </div>
-            <div>
-                <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>Voulez vous ... ?</p>
-                </a>
-            </div>
-            <div>
-                <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>Voulez vous ... ?</p>
-                </a>
-            </div>
-            <div>
-                <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>Voulez vous ... ?</p>
-                </a>
-            </div>
-            <div>
-                <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>Voulez vous ... ?</p>
+                    <p>{{p.surnom}}</p>
                 </a>
             </div>
         </div>
+            <!--<div>
+                <a class="item item-avatar" style="border:hidden;">
+                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
+                    <p>Voulez vous ... ?</p>
+                </a>
+            </div>
+            <div>
+                <a class="item item-avatar" style="border:hidden;">
+                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
+                    <p>Voulez vous ... ?</p>
+                </a>
+            </div>
+            <div>
+                <a class="item item-avatar" style="border:hidden;">
+                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
+                    <p>Voulez vous ... ?</p>
+                </a>
+            </div>
+            <div>
+                <a class="item item-avatar" style="border:hidden;">
+                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
+                    <p>Voulez vous ... ?</p>
+                </a>
+            </div>-->
+        
 
 
             <div class="item item-divider" align="left">Mes invitations ... </div>
             <div class="list" ng-click="goInvitDetails(i.inv_emetteurid)" ng-repeat="i in invitations.invitation | filter:{envoyer:currentUser.id} | filter:{inv_recepteurid:currentUser.id}">
-                <div>
+                <div ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}">
                     <a class="item item-avatar" style="border:hidden;">
                         <img src="img/who-am-i.jpg">
-                        <p>{{i.envoyer}}</p>
+                        <p>{{p.surnom}}</p>
                     </a>
                 </div>
             </div>
