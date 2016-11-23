@@ -1,15 +1,15 @@
 ﻿<ion-view >
     <ion-content padding="true">
-        <div ng-repeat="m in messages.message |  filter:{msg_emetteurid:GetUserId} ">
+        <div ng-repeat="m in messages.message">
             <div ng-if="m.msg_emetteurid == currentUser.id">
                 <div class="bubble you">
-                    {{ m.msg_emetteurid }}
+                    {{ m.id }}
                 </div>
             </div>
             <div style="clear:both"></div>
             <div  ng-if="m.msg_recepteurid == currentUser.id">
                 <div class="bubble me">
-                    {{ m.msg_emetteurid }}
+                    {{ m.message }}
                 </div>
             </div>
             <div style="clear:both"></div>

@@ -13,7 +13,7 @@
     $scope.goRecherchePerso = function () { $state.go("recherchePerso"); }
     $scope.goCredit = function () { $state.go("credit"); }
     $scope.goInvitation = function () { $state.go("invitation"); }
-
+    $scope.goConfirmationQuitter = function () { $state.go("confirmationQuitter"); }
     // call to get the user and set it to your scope variable
     //ngUserService.getUser(function(user){$scope.currentUser = user;});
 
@@ -49,10 +49,23 @@
             function (e) { console.log(e) }
         );
     $scope.editProfile = function () {
+        /*$.post({
+            dataType: "json",
+            url: 'http://bluepenlabs.com/projects/voulezvous/api.php/message/' + $scope.personne.id,
+            data: { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
+            success: console.log("ok")
+        });*/
+        /*$.ajax('http://bluepenlabs.com/projects/voulezvous/api.php/message/' + $scope.personne.id, {
+            method: 'PUT',
+            contentType: 'application/json',
+            processData: false,
+            data: JSON.stringify({ "surnom": $scope.personne.surnom, "description": $scope.personne.description })
+        })*/
         $http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.personne.id,
             { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
             { "Content-Type": "application/json" }).then(function (s) { $state.go("monprofile"); }, function (e) { console.log(e); })
     }
+    
     $scope.editRechercheValue = function () {
         $http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.personne.id,
             { "rechercheValue": $scope.personne.recherche },
@@ -61,7 +74,56 @@
 
 })
 
-.controller('MsgCtrl', function ($scope, $http, UserService, $state, GetUserId) {
+.controller('MsgCtrl', function ($scope, $http, UserService, $state, GetUserId, GetInvId,$ionicPopup, FriendsService) {
+
+    $scope.showAlert = function () {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Voulez Vous ...',
+            template: 'quitter le site avec ...'
+        });
+
+        alertPopup.then(function (res) {
+            $state.go("home");
+            console.log('quitter est fait');
+        });
+    };
+
+    $scope.showConfirm = function () {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Voulez Vous ...',
+            template: 'Quitter le site avec moi ?'
+        });
+
+        confirmPopup.then(function (res) {
+            if (res) {
+                $state.go("confirmationQuitter");
+                console.log('Oui');
+            } else {
+                console.log('Non');
+            }
+        });
+    };
+
+    $scope.showConfirmInvi = function () {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Voulez Vous ...',
+            template: 'discuter avec moi ?',
+            cancelText: 'supprimer',
+            okText: 'accepter'
+        });
+
+        confirmPopup.then(function (res) {
+            if (res) {
+                //$scope.personne.nbr_credit = $scope.personne.nbr_credit - 1;
+                $scope.deleteInvi();
+                $scope.sendInvi();
+                console.log('Oui');
+            } else {
+                $scope.deleteInvi();
+                console.log('Non');
+            }
+        });
+    };
 
     $scope.goInvitDetails = function (userClickedId) {
         GetUserId.userId = userClickedId;
@@ -69,9 +131,25 @@
         $state.go("profile");
     }
 
+    $scope.getUserInvID = function (userClickedId) {
+        GetUserId.userId = userClickedId;
+        console.log(GetUserId.userId);
+    }
+
+    $scope.getInvId = function (inviClickedId) {
+        GetInvId.invId = inviClickedId;
+        console.log(GetInvId.invId);
+    }
+
     $scope.reloadRoute = function () {
         $route.reload();
     }
+
+    /*$http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message?filter=msg_recepteurid,eq,' + $scope.currentUser.id).
+    then(
+            function (r) { console.log(r.data); $scope.messagess = r.data; },
+            function (e) { console.log(e) }
+        )*/
 
     $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
         then(
@@ -114,6 +192,21 @@
         )
         $scope.myImgUrl = personnes.img;
     }
+
+    $scope.sendInvi = function () {
+
+        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
+            { "envoyer": "0", "annuler": "0", "accepter": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
+            { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
+        $scope.goInvitation();
+    }
+
+    $scope.deleteInvi = function () {
+        $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/' + GetInvId.invId,
+        { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+        $state.go("home");
+    }
+
 
 })
 
@@ -183,5 +276,9 @@
 
 .factory('GetUserId', function () {
     return { userId: '' };
-});
+})
+
+.factory('GetInvId', function () {
+    return { invId: '' };
+})
 ;

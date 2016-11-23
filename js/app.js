@@ -95,6 +95,11 @@ angular.module('starter', ['ionic'])
         templateUrl: 'templates/invitation.html',
         controller: 'ProfCtrl'
     })
+    .state('confirmationQuitter', {
+        url: '/confirmationQuitter',
+        templateUrl: 'templates/confirmationQuitter.html',
+        controller: 'MsgCtrl'
+    })
 
     $urlRouterProvider.otherwise(function ($injector, $location) {
         var $state = $injector.get("$state");
