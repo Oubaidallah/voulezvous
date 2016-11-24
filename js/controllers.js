@@ -103,7 +103,7 @@
             }
         });
     };
-
+    
     $scope.showConfirmInvi = function () {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Voulez Vous ...',
@@ -141,26 +141,23 @@
         console.log(GetInvId.invId);
     }
 
+    
     $scope.reloadRoute = function () {
         $route.reload();
     }
-
-    /*$http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message?filter=msg_recepteurid,eq,' + $scope.currentUser.id).
-    then(
-            function (r) { console.log(r.data); $scope.messagess = r.data; },
-            function (e) { console.log(e) }
-        )*/
 
     $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
         then(
             function (r) { console.log(r.data); $scope.invitations = r.data; },
             function (e) { console.log(e) }
         )
-    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message?transform=1').
+    
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message?filter[]=msg_recepteurid,eq,' + GetUserId.userId + '&filter[]=msg_emetteurid,eq,' + GetUserId.userId + '&satisfy=any&transform=1').
         then(
             function (r) { console.log(r.data); $scope.messages = r.data; },
             function (e) { console.log(e) }
         )
+
 
     UserService.getAllUser().then(
             function (r) { console.log(r.data); $scope.personnes = r.data; },
@@ -171,10 +168,15 @@
             function (r) { console.log(r.data); $scope.currentUser = r.data; },
             function (e) { console.log(e) }
         )
+
+    
+
     $scope.addMessage = function () {
+        $scope.getDatetime = new Date();
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/message/',
-            { "msg_emetteurid": "2", "msg_recepteurid": "1", "message": "tesst from 2 to 1", "msg_timedatedenvoi": "16/11/05 11:25:28" },
-            { "Content-Type": "application/json" }).then(function (s) { loadData(); }, function (e) { console.log(e); })
+            { "msg_emetteurid": $scope.currentUser.id, "msg_recepteurid": GetUserId.userId, "message": $scope.mmessage, "msg_timedatedenvoi": $scope.getDatetime },
+            { "Content-Type": "application/json" }).then(function (s) { $scope.mmessage = null; }, function (e) { console.log(e); })
+        
     }
 
     $scope.getProfile = function (prof_id) {
