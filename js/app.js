@@ -85,6 +85,11 @@ angular.module('starter', ['ionic'])
         templateUrl: 'templates/recherchePerso.html',
         controller: 'MyprofCtrl'
     })
+    .state('visibilitePerso', {
+        url: '/visibilitePerso',
+        templateUrl: 'templates/visibilitePerso.html',
+        controller: 'MyprofCtrl'
+    })
     .state('credit', {
         url: '/credit',
         templateUrl: 'templates/credit.html',

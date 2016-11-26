@@ -1,8 +1,9 @@
 ﻿angular.module('starter')
 .factory('UserService', ['$http', function ($http) {
+
     function getCurrentUser() {
         var userId = 1;
-        return $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + userId).
+        return $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + userId ).
         then(
             function (r) { return r; },
             function (e) { }

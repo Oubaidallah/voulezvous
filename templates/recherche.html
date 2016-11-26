@@ -11,6 +11,7 @@
                 </label>
             </li>
         </div>
+        <input placeholder="recherche"/>
         <div class="grid" ng-repeat="p in personnes.personne | filter:search" ng-click="goInvitDetails(p.id)">
             <div class="card" ng-if="p.id !='1'" >
                 <div class="profileWrapper">

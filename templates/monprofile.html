@@ -6,49 +6,76 @@
             </div>
         </div>
         <div align="center">
-            <div align="center" >
+            <div align="center">
                 {{personne.surnom}},{{personne.age}}
             </div>
             <button class="button button-clear button-positive" ng-click="goEditProfile()">
                 Modifier mon profil
             </button>
         </div>
-        <ul class="list">
-            <div ng-click="goRecherchePerso()">
-                <li class="item item-toggle">
-                    Ma recherche
-                    <label class="toggle toggle-positive" >
-                        <input type="checkbox">
-                        <div class="track">
-                            <div class="handle"></div>
-                        </div>
-                    </label>
-                </li>
+        <div class="row ">
+            <div class="col col-75" ng-click="goRecherchePerso()">Ma recherche</div>
+            <div class="col">
+                <label class="toggle toggle-positive">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
             </div>
-            <li class="item item-toggle">
-                Qui peut me voir
-                <label class="toggle toggle-royal">
+        </div>
+        <div class="row ">
+            <div class="col col-75" ng-click="goVisibilitePerso()">Qui peut me voir</div>
+            <div class="col">
+                <label class="toggle toggle-positive">
                     <input type="checkbox">
                     <div class="track">
                         <div class="handle"></div>
                     </div>
                 </label>
-            </li>
-            <li class="item item-toggle">
-                Voyage
-                <label class="toggle toggle-assertive">
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col col-75">Voyage</div>
+            <div class="col">
+                <label class="toggle toggle-positive">
                     <input type="checkbox">
                     <div class="track">
                         <div class="handle"></div>
                     </div>
                 </label>
-            </li>
-        </ul>
+            </div>
+        </div>
         <div class="item item-button-right">
             Aide
             <button class="button button-positive">
                 <i class="icon ion-help"></i>
             </button>
         </div>
+
+        <!--<li class="item item-toggle" ng-click="goVisibilitePerso()">
+            Qui peut me voir
+            <label class="toggle toggle-royal">
+                <input type="checkbox">
+                <div class="track">
+                    <div class="handle"></div>
+                </div>
+            </label>
+        </li>
+        <li class="item item-toggle">
+            Voyage
+            <label class="toggle toggle-assertive">
+                <input type="checkbox">
+                <div class="track">
+                    <div class="handle"></div>
+                </div>
+            </label>
+        </li>
+        <div class="item item-button-right">
+            Aide
+            <button class="button button-positive">
+                <i class="icon ion-help"></i>
+            </button>
+        </div>-->
     </ion-content>
 </ion-view>

@@ -11,6 +11,7 @@
     $scope.goProfile = function () { $state.go("profile"); }
     $scope.goHistorique = function () { $state.go("historique"); }
     $scope.goRecherchePerso = function () { $state.go("recherchePerso"); }
+    $scope.goVisibilitePerso = function () { $state.go("visibilitePerso"); }
     $scope.goCredit = function () { $state.go("credit"); }
     $scope.goInvitation = function () { $state.go("invitation"); }
     $scope.goConfirmationQuitter = function () { $state.go("confirmationQuitter"); }
@@ -20,6 +21,7 @@
 }) // ligne hethi bch zedna un controlleur lel module récupéré
 
 .controller('index', function ($scope, $http, UserService, $ionicPopup) {
+
     UserService.getCurrentUser().then(
             function (r) { console.log(r.data); $scope.currentUser = r.data; },
             function (e) { console.log(e) }
@@ -37,17 +39,28 @@
     };
 })
 
-.controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate) {
-    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/').
+.controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate,UserService) {
+
+    UserService.getCurrentUser().then(
+            function (r) { console.log(r.data); $scope.currentUser = r.data; },
+            function (e) { console.log(e) }
+        )
+    
+
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/recherche?filter=' + 1 + ',eq,1&transform=1').
         then(
             function (r) { console.log(r.data); $scope.recherches = r.data; },
             function (e) { console.log(e) }
         )
+
+    
+
     $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/1').
         then(
             function (r) { console.log(r.data); $scope.personne = r.data; },
             function (e) { console.log(e) }
         );
+
     $scope.editProfile = function () {
         /*$.post({
             dataType: "json",
@@ -109,7 +122,7 @@
             title: 'Voulez Vous ...',
             template: 'discuter avec moi ?',
             cancelText: 'supprimer',
-            okText: 'accepter'
+            okText: 'accepter',
         });
 
         confirmPopup.then(function (res) {
@@ -119,10 +132,11 @@
                 $scope.sendInvi();
                 console.log('Oui');
             } else {
-                $scope.deleteInvi();
+                //$scope.deleteInvi();
                 console.log('Non');
             }
         });
+
     };
 
     $scope.goInvitDetails = function (userClickedId) {
@@ -151,7 +165,7 @@
             function (r) { console.log(r.data); $scope.invitations = r.data; },
             function (e) { console.log(e) }
         )
-    
+   
     $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message?filter[]=msg_recepteurid,eq,' + GetUserId.userId + '&filter[]=msg_emetteurid,eq,' + GetUserId.userId + '&satisfy=any&transform=1').
         then(
             function (r) { console.log(r.data); $scope.messages = r.data; },
