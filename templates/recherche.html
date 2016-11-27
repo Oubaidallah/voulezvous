@@ -1,6 +1,6 @@
 ﻿<ion-view cache-view="false" overflow-scroll="false">
     <ion-content class="padding">
-        <div ng-click="goRecherchePerso()" >
+        <div ng-click="goRecherchePerso()">
             <li class="item item-toggle">
                 Ma recherche
                 <label class="toggle toggle-positive">
@@ -11,23 +11,22 @@
                 </label>
             </li>
         </div>
-        <input placeholder="recherche"/>
-        <div class="grid" ng-repeat="p in personnes.personne | filter:search" ng-click="goInvitDetails(p.id)">
+        <input ng-model="search.surnom" placeholder="recherche" />
+        <div class="grid" ng-repeat="p in personnes.personne | filter:search.surnom" ng-click="goInvitDetails(p.id)">
             <div class="card" ng-if="p.id !='1'" >
                 <div class="profileWrapper">
                     <div class="picHolder">
-                        <div class="close-btn" ><a ng-hide="">X</a></div>
-                        <img src="img/pic5.jpg" >
-                            {{p.surnom}}, {{p.age}}
-                        </div>
+                        <div class="close-btn"><a ng-hide="">X</a></div>
+                        <img src="img/pic5.jpg">
+                        {{p.surnom}}, {{p.age}}
                     </div>
-                    <div class="options spaceIt">
-                        <div class="totem"><img src="img/icon.png"></div>
-                        <div class="messageBtnHolder">
-                            <a class="msgBtn"><i class="fa fa-envelope" ></i></a>
-                        </div>
-                        <div class="clearfix"></div>
+                </div>
+                <div class="options spaceIt">
+                    <div class="totem"><img src="img/icon.png"></div>
+                    <div class="messageBtnHolder">
+                        <a class="msgBtn"><i class="fa fa-envelope" ></i></a>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>

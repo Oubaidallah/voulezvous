@@ -1,13 +1,13 @@
 ﻿<ion-view cache-view="false">
     <ion-content class="padding">
-        <div class="list">
+        <div class="list" ng-repeat="r in recherches.recherche" ng-if="r.id_user== currentUser.id" ng-model="r.id">
             <div align="center">
                 <div class="input-label">
                     Age
                 </div>
                 <div class="item range">
                     <i>min</i>
-                    <input type="range" name="age" min="18" max="80">
+                    <input type="range" name="age" min="ageMin" max="ageMax">
                     <i>max</i>
                 </div>
                 </div>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="item range">
                     <i>km</i>
-                    <input type="range" value="{{recherches.distance}}"  min="0" max="100">
+                    <input type="range"  min="0" max="100" value="{{r.distance}}">
                     <i>km</i>
                 </div>
             </div>
@@ -25,21 +25,27 @@
                 <div class="input-label">
                     Sexe
                 </div>
-                <select ng-model="sexe">
-                    <option selected>Femme</option>
-                    <option>Homme</option>
-                    <option>Homme et Femme</option>
+                <select ng-model="r.sexe">
+                    <option ng-repeat="typ in typePerso" value="{{typ.Name}}"
+                            ng-selected="{{ typ.Selected == true }}">
+                        {{typ.Name}}
+                    </option>
                 </select>
             </label>
             <label class="item item-input item-select">
                 <div class="input-label">
                     Type de profil
                 </div>
-                <select>
-                    <option selected>FFFF</option>
-                    <option>GGGG</option>
+                <select ng-model="r.profile">
+                    <option ng-repeat="typrof in typeProfil" value="{{typrof.Name}}"
+                            ng-selected="{{ typrof.Selected == true }}">
+                        {{typrof.Name}}
+                    </option>
                 </select>
             </label>
             </div>
+        <button class="button button-block button-positive" ng-click="editRecherche()">
+            Mettre à jours
+        </button>
     </ion-content>
 </ion-view>

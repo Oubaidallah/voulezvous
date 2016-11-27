@@ -6662,8 +6662,8 @@ button.item.item-button-right {
     border-bottom: 0; }
 
 .padding .card, .padding .list-inset {
-  margin-left: 0;
-  margin-right: 0; }
+  margin-left: 3px;
+  margin-right: 3px; }
 
 .card .item:first-child,
 .list-inset .item:first-child,

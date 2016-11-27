@@ -144,6 +144,8 @@
 .totem {
 	width: 20%;
 	float: left;
+    margin-left : 5px;
+    margin-top : 5px;
 }
 .totem img{
 	display: block;
@@ -153,6 +155,7 @@
 	width: 20%;
 	float: right;
 	font-size: 2em;
+    margin-right : 5px;
 }
 .coverContainer{
 	position: relative;
