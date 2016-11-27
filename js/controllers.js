@@ -81,16 +81,16 @@
         { Id: 16, Name: 'ESFP', Selected: false },
     ];
 
-    $scope.editRecherche = function () {
+    /*$scope.editRecherche = function () {
 
         $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
-            { "id_user": $scope.currentUser.id, "ageMin": "20", "ageMax": "40", "sexe": $scope.sexe, "distance": $scope.ddistance, "profile": $scope.profile },
+            { "id_user": $scope.currentUser.id, "ageMin": "20", "ageMax": "40", "sexe": $scope.sexe, "distance": $scope.r.distance, "profile": $scope.profile },
             { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
         $scope.goMonprofile();
-    }
+    }*/
 
 
     $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/1').
