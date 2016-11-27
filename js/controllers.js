@@ -39,10 +39,21 @@
     };
 })
 
-.controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate, UserService) {
+.controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate, UserService, $ionicPopup) {
 
     $scope.ageMin = 18;
     $scope.ageMax = 80;
+
+    $scope.showAlert = function () {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Aide',
+            template: 'Help ! :D'
+        });
+
+        alertPopup.then(function (res) {
+            console.log('Aide');
+        });
+    };
 
     UserService.getCurrentUser().then(
             function (r) { console.log(r.data); $scope.currentUser = r.data; },
@@ -50,35 +61,35 @@
         )
 
 
-    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/recherche?transform=1').
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/recherche?filter=id,eq,' + 1 + '?transform=1').
         then(
             function (r) { console.log(r.data); $scope.recherches = r.data; },
             function (e) { console.log(e) }
         )
 
     $scope.typePerso = [
-        { Id: 1, Name: 'Femme', Selected: true },
-        { Id: 2, Name: 'Homme', Selected: false },
-        { Id: 3, Name: 'Homme et Femme', Selected: false }
+        { Name: 'Femme', Selected: false },
+        { Name: 'Homme', Selected: false },
+        { Name: 'Homme et Femme', Selected: true }
     ];
 
     $scope.typeProfil = [
-        { Id: 1, Name: 'INTJ', Selected: true },
-        { Id: 2, Name: 'INTP', Selected: false },
-        { Id: 3, Name: 'ENTJ', Selected: false },
-        { Id: 4, Name: 'ENTP', Selected: false },
-        { Id: 5, Name: 'INFJ', Selected: false },
-        { Id: 6, Name: 'INFP', Selected: false },
-        { Id: 7, Name: 'ENFJ', Selected: false },
-        { Id: 8, Name: 'ENFP', Selected: false },
-        { Id: 9, Name: 'ISTJ', Selected: false },
-        { Id: 10, Name: 'ISFJ', Selected: false },
-        { Id: 11, Name: 'ESTJ', Selected: false },
-        { Id: 12, Name: 'ESFJ', Selected: false },
-        { Id: 13, Name: 'ISTP', Selected: false },
-        { Id: 14, Name: 'ISFP', Selected: false },
-        { Id: 15, Name: 'ESTP', Selected: false },
-        { Id: 16, Name: 'ESFP', Selected: false },
+        { Name: 'INTJ', Selected: true },
+        { Name: 'INTP', Selected: false },
+        { Name: 'ENTJ', Selected: false },
+        { Name: 'ENTP', Selected: false },
+        { Name: 'INFJ', Selected: false },
+        { Name: 'INFP', Selected: false },
+        { Name: 'ENFJ', Selected: false },
+        { Name: 'ENFP', Selected: false },
+        { Name: 'ISTJ', Selected: false },
+        { Name: 'ISFJ', Selected: false },
+        { Name: 'ESTJ', Selected: false },
+        { Name: 'ESFJ', Selected: false },
+        { Name: 'ISTP', Selected: false },
+        { Name: 'ISFP', Selected: false },
+        { Name: 'ESTP', Selected: false },
+        { Name: 'ESFP', Selected: false },
     ];
 
     /*$scope.editRecherche = function () {
@@ -106,15 +117,15 @@
             data: { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
             success: console.log("ok")
         });*/
-        /*$.ajax('http://bluepenlabs.com/projects/voulezvous/api.php/message/' + $scope.personne.id, {
+        $.ajax('http://bluepenlabs.com/projects/voulezvous/api.php/message/' + $scope.personne.id, {
             method: 'PUT',
             contentType: 'application/json',
             processData: false,
             data: JSON.stringify({ "surnom": $scope.personne.surnom, "description": $scope.personne.description })
-        })*/
-        $http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.personne.id,
+        })
+        /*$http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.personne.id,
             { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
-            { "Content-Type": "application/json" }).then(function (s) { $state.go("monprofile"); }, function (e) { console.log(e); })
+            { "Content-Type": "application/json" }).then(function (s) { $state.go("monprofile"); }, function (e) { console.log(e); })*/
     }
 
     $scope.editRechercheValue = function () {
@@ -233,7 +244,14 @@
         $scope.getDatetime = new Date();
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/message/',
             { "msg_emetteurid": $scope.currentUser.id, "msg_recepteurid": GetUserId.userId, "message": $scope.mmessage, "msg_timedatedenvoi": $scope.getDatetime },
-            { "Content-Type": "application/json" }).then(function (s) { $scope.mmessage = null; }, function (e) { console.log(e); })
+            { "Content-Type": "application/json" }).then(function (s) {
+                $scope.mmessage = null;
+                $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message?filter[]=msg_recepteurid,eq,' + GetUserId.userId + '&filter[]=msg_emetteurid,eq,' + GetUserId.userId + '&satisfy=any&transform=1').
+                then(
+                    function (r) { console.log(r.data); $scope.messages = r.data; },
+                    function (e) { console.log(e) }
+                )
+            }, function (e) { console.log(e); })
 
     }
 
@@ -257,8 +275,14 @@
 
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
             { "envoyer": "0", "annuler": "0", "accepter": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
-            { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
-        $scope.goInvitation();
+            { "Content-Type": "application/json" }).then(function (s) {
+                $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
+                then(
+                    function (r) { console.log(r.data); $scope.invitations = r.data; },
+                    function (e) { console.log(e) }
+                )
+            }, function (e) { console.log(e); })
+        $scope.goMessage();
     }
 
     $scope.deleteInvi = function () {

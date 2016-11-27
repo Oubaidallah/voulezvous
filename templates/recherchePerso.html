@@ -1,6 +1,6 @@
 ﻿<ion-view cache-view="false">
     <ion-content class="padding">
-        <div class="list" ng-repeat="r in recherches.recherche" ng-if="r.id_user== currentUser.id" ng-model="r.id">
+        <div class="list">
             <div align="center">
                 <div class="input-label">
                     Age
@@ -17,15 +17,26 @@
                 </div>
                 <div class="item range">
                     <i>km</i>
-                    <input type="range"  min="0" max="100" value="{{r.distance}}">
+                    <input type="range"  min="0" max="100" >
                     <i>km</i>
                 </div>
             </div>
+            <!--<label class="item item-input item-select">
+                <div class="input-label">
+                    Sexe
+                </div>
+                <select>
+                    <option ng-repeat="typ in typePerso" value="{{typ.Name}}"
+                            ng-selected="{{ typ.Selected == true }}">
+                        {{typ.Name}}
+                    </option>
+                </select>
+            </label>-->
             <label class="item item-input item-select">
                 <div class="input-label">
                     Sexe
                 </div>
-                <select ng-model="r.sexe">
+                <select>
                     <option ng-repeat="typ in typePerso" value="{{typ.Name}}"
                             ng-selected="{{ typ.Selected == true }}">
                         {{typ.Name}}
@@ -36,7 +47,7 @@
                 <div class="input-label">
                     Type de profil
                 </div>
-                <select ng-model="r.profile">
+                <select >
                     <option ng-repeat="typrof in typeProfil" value="{{typrof.Name}}"
                             ng-selected="{{ typrof.Selected == true }}">
                         {{typrof.Name}}
