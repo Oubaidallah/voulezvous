@@ -68,9 +68,9 @@
         )
 
     $scope.typePerso = [
-        { Name: 'Femme', Selected: false },
+        { Name: 'Femme', Selected: true },
         { Name: 'Homme', Selected: false },
-        { Name: 'Homme et Femme', Selected: true }
+        { Name: 'Homme et Femme', Selected: false }
     ];
 
     $scope.typeProfil = [
@@ -166,10 +166,11 @@
         });
     };
 
+
     $scope.showConfirmInvi = function () {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Voulez Vous ...',
-            template: 'discuter avec moi ?',
+            template: '<p>{{i.message}}</p>',
             cancelText: 'supprimer',
             okText: 'accepter',
         });
@@ -310,7 +311,7 @@
         )
 })
 
-.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId, FriendsService) {
+.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId, FriendsService, $ionicPopup) {
 
     /*FriendsService.checkInvit(1, GetUserId.userId).then(
         function (r) {
@@ -350,10 +351,24 @@
 
     $scope.sendInvi = function () {
 
-        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
-            { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id },
-            { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
-        $scope.goInvitation();
+        var promptPopup = $ionicPopup.prompt({
+            title: 'Voulez Vous ?',
+            template: 'This is prompt popup'
+        }).then(function (res) {
+            if (res) {
+                console.log('Your input is ', res);                
+                $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
+             { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
+             { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
+                
+            } else {
+                console.log('Please enter input');
+            }
+
+        });
+
+        
+        
     }
 
 })

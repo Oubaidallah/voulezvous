@@ -2,7 +2,7 @@
     <ion-content class="padding">
         <div class="item item-divider" align="left">Je veux quitter le site avec ... </div>
         <div class="list" style="margin:auto;" ng-repeat="i in invitations.invitation | filter:{accepter:'1'} | filter:{inv_recepteurid:currentUser.id}">
-            <div class="item item-button-right" style="border:hidden;" ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}" ng-click="getUserInvID(p.id)">
+            <!--<div class="item item-button-right" style="border:hidden;" ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}" ng-click="getUserInvID(p.id)">
                 <a class="item item-avatar" style="border:none;">
                     <img src="img/who-am-i.jpg" ng-click="goInvitDetails(p.id)">
                     <h2 ng-click="goDiscussion()">{{p.surnom}}</h2>
@@ -11,41 +11,53 @@
                 <button class="button" ng-click="showConfirm()" style="margin-top:10px;">
                     <img src="img/LOGO_test1.png" width="10" height="10" />
                 </button>
-            </div>
-        </div>
-            <!--<div>
-                <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>Voulez vous ... ?</p>
-                </a>
-            </div>
-            <div>
-                <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>Voulez vous ... ?</p>
-                </a>
-            </div>
-            <div>
-                <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>Voulez vous ... ?</p>
-                </a>
-            </div>
-            <div>
-                <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
-                    <p>Voulez vous ... ?</p>
-                </a>
             </div>-->
-            <div class="item item-divider" align="left">Mes invitations ... </div>
-            <div class="list" style="margin:auto;" ng-repeat="i in invitations.invitation | filter:{envoyer:currentUser.id} | filter:{inv_recepteurid:currentUser.id}" ng-click="getInvId(i.id)">
-                <div class="item" style="border:hidden;" ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}" ng-click="getUserInvID(p.id)">
-                    <a class="item item-avatar" style="border:hidden;" ng-click="showConfirmInvi()">
-                        <img src="img/who-am-i.jpg" width="10" height="12">
-                        <h2>{{p.surnom}}</h2>
-                        <p>Voulez vous ...</p>
+            <div class="row" style="margin-top:-10px;margin-bottom:-20px" ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}" ng-click="getUserInvID(p.id)">
+                <div class="col col-75" style="margin:auto;">
+                    <a class="item item-avatar" style="border:none;margin:auto;">
+                        <img src="img/who-am-i.jpg" ng-click="goInvitDetails(p.id)">
+                        <h2 ng-click="goDiscussion()" style="margin-top:-7px;">{{p.surnom}}</h2>
+                        <p ng-click="goDiscussion()">Discussion ...</p>
                     </a>
                 </div>
+                <div class="col col-bottom" ng-click="showConfirm()" style="margin:auto;">
+                    <img src="img/LOGO_test1.png" width="30" height="30" />
+                </div>
             </div>
+        </div>
+        <!--<div>
+            <a class="item item-avatar" style="border:hidden;">
+                <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
+                <p>Voulez vous ... ?</p>
+            </a>
+        </div>
+        <div>
+            <a class="item item-avatar" style="border:hidden;">
+                <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
+                <p>Voulez vous ... ?</p>
+            </a>
+        </div>
+        <div>
+            <a class="item item-avatar" style="border:hidden;">
+                <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
+                <p>Voulez vous ... ?</p>
+            </a>
+        </div>
+        <div>
+            <a class="item item-avatar" style="border:hidden;">
+                <img src="img/who-am-i.jpg" ng-click="goDiscussion()">
+                <p>Voulez vous ... ?</p>
+            </a>
+        </div>-->
+        <div class="item item-divider" align="left">Mes invitations ... </div>
+        <div class="list" style="margin:auto;" ng-repeat="i in invitations.invitation | filter:{envoyer:currentUser.id} | filter:{inv_recepteurid:currentUser.id}" ng-click="getInvId(i.id)">
+            <div style="border:hidden;" ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}" ng-click="getUserInvID(p.id)">
+                <a class="item item-avatar" style="border:hidden;" ng-click="showConfirmInvi()">
+                    <img src="img/who-am-i.jpg" width="10" height="12">
+                    <h2 style="margin-top:-8px">{{p.surnom}}</h2>
+                    <p ng-model="invmessage">{{i.message}}</p>
+                </a>
+            </div>
+        </div>
     </ion-content>
 </ion-view>
