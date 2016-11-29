@@ -1,8 +1,8 @@
 ﻿<ion-view cache-view="false" overflow-scroll="false">
-    <ion-content class="padding">
+    <ion-content class="has-header has-footer">
         <div class="row">
-            <div class="col col-75" style="margin-top:5px;" ng-click="goRecherchePerso()">Ma recherche</div>
-            <div class="col">
+            <div class="col col-75" style="margin-left:10px;" ng-click="goRecherchePerso()">Ma recherche</div>
+            <div class="col" style="margin-left:10px;">
                 <label class="toggle toggle-positive">
                     <input type="checkbox">
                     <div class="track">
@@ -11,20 +11,22 @@
                 </label>
             </div>
         </div>
-        <input ng-model="search.surnom" placeholder="recherche" />
-        <div ng-repeat="p in personnes.personne | filter:search.surnom" ng-click="goInvitDetails(p.id)">
-            <div class="card" ng-if="p.id !='1'" >
+        <div class="row responsive-sm">
+            <div class="col" style="margin-left:10px;"><input ng-model="search.surnom" placeholder="recherche" /></div>
+        </div>
+        <div ng-repeat="p in personnes.personne | filter:search.surnom">
+            <div class="card" ng-if="p.id !='1'">
                 <div class="profileWrapper">
                     <div class="picHolder">
-                        <div class="close-btn"><a ng-hide="">X</a></div>
-                        <img ng-src="{{p.img}}">
+                        <div class="close-btn"><a ng-if="isUser" ng-click="hideUser()">X</a></div>
+                        <img ng-src="{{p.img}}" ng-click="goInvitDetails(p.id)">
                         {{p.surnom}}, {{p.age}}
                     </div>
                 </div>
                 <div class="options spaceIt">
-                    <div class="totem"><img src="img/icon.png"></div>
-                    <div class="messageBtnHolder">
-                        <a class="msgBtn"><i class="fa fa-envelope" ></i></a>
+                    <div class="totem" ng-click="goInvitDetails(p.id)"><img src="img/icon.png"></div>
+                    <div class="messageBtnHolder" ng-controller="ProfCtrl">
+                        <a class="msgBtn" ng-click="sendInviRech()"><i class="fa fa-envelope"></i></a>
                     </div>
                     <div class="clearfix"></div>
                 </div>

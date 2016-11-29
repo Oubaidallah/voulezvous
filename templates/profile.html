@@ -1,8 +1,8 @@
 ﻿<ion-view>
-        <ion-content padding="true" scroll="false">
+        <ion-content class="has-header has-footer">
             <div class="coverContainer">
                 <a href="javascript:history.back()" class="return"><i class="fa fa-reply"></i></a>
-                <a ng-click="sendInvi()" class="flagIt"><i class="fa fa-vimeo"></i></a>
+                <a class="flagIt" ng-click="show()"><i class="fa fa-flag"></i></a>
                 <img src="img/pic6.jpg">
                 <div class="profileInfo">
                     <div class="container-fluid">
@@ -13,6 +13,9 @@
             </div>
             <div class="container-fluid spaceIt">
                 {{personne.description}}
+            </div>
+            <div class="container-fluid spaceIt">
+                Description MBTI
             </div>
             <div class="container-fluid">
                 <div class="col-xs-8">
@@ -25,14 +28,9 @@
                 </div>
             </div>
         </ion-content>
-        <ion-footer-bar keyboard-attach>
-            <div class="tabs">
-                <a class="tab-item">
-                    <i class="icon ion-social-vimeo" ng-click="goRecherche()"></i>
-                </a>
-                <a class="tab-item">
-                    <i class="icon ion-close" ng-click="goRecherche()"></i>
-                </a>
-            </div>
-        </ion-footer-bar>
     </ion-view>
+<ion-footer-bar class="bar-subfooter">
+    <button class="button  button-full button-clear button-royal" style="line-height:8px;margin:auto;" ng-click="sendInvi()">
+        Voulez Vous ?
+    </button>
+</ion-footer-bar>

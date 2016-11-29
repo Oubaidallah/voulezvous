@@ -80,6 +80,11 @@ angular.module('starter', ['ionic'])
         templateUrl: 'templates/historique.html',
         controller: 'MsgCtrl'
     })
+    .state('historiqueDiscussion', {
+        url: '/historiqueDiscussion',
+        templateUrl: 'templates/historiqueDiscussion.html',
+        controller: 'MsgCtrl'
+    })
     .state('recherchePerso', {
         url: '/recherchePerso',
         templateUrl: 'templates/recherchePerso.html',

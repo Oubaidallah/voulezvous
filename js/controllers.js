@@ -10,6 +10,7 @@
     $scope.goQuestion = function () { $state.go("question"); }
     $scope.goProfile = function () { $state.go("profile"); }
     $scope.goHistorique = function () { $state.go("historique"); }
+    $scope.goHistoriqueDiscussion = function () { $state.go("historiqueDiscussion"); }
     $scope.goRecherchePerso = function () { $state.go("recherchePerso"); }
     $scope.goVisibilitePerso = function () { $state.go("visibilitePerso"); }
     $scope.goCredit = function () { $state.go("credit"); }
@@ -116,13 +117,13 @@
             url: 'http://bluepenlabs.com/projects/voulezvous/api.php/message/' + $scope.personne.id,
             data: { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
             success: console.log("ok")
-        });*/
+        });
         $.ajax('http://bluepenlabs.com/projects/voulezvous/api.php/message/' + $scope.personne.id, {
             method: 'PUT',
             contentType: 'application/json',
             processData: false,
             data: JSON.stringify({ "surnom": $scope.personne.surnom, "description": $scope.personne.description })
-        })
+        })*/
         /*$http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.personne.id,
             { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
             { "Content-Type": "application/json" }).then(function (s) { $state.go("monprofile"); }, function (e) { console.log(e); })*/
@@ -137,6 +138,12 @@
 })
 
 .controller('MsgCtrl', function ($scope, $http, UserService, $state, GetUserId, GetInvId, $ionicPopup, FriendsService) {
+
+    $scope.isUser = true;
+
+    $scope.hideUser = function () {
+        $scope.isUser = false;
+    }
 
     $scope.showAlert = function () {
         var alertPopup = $ionicPopup.alert({
@@ -171,8 +178,8 @@
         var confirmPopup = $ionicPopup.confirm({
             title: 'Voulez Vous ...',
             template: '<p>{{i.message}}</p>',
-            cancelText: 'supprimer',
-            okText: 'accepter',
+            cancelText: 'Supprimer',
+            okText: 'Accepter',
         });
 
         confirmPopup.then(function (res) {
@@ -311,7 +318,7 @@
         )
 })
 
-.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId, FriendsService, $ionicPopup) {
+.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId, FriendsService, $ionicPopup, $ionicActionSheet, $timeout) {
 
     /*FriendsService.checkInvit(1, GetUserId.userId).then(
         function (r) {
@@ -322,6 +329,30 @@
         },
             function (e) { console.log(e) }
         )*/
+
+    $scope.show = function () {
+
+        // Show the action sheet
+        var hideSheet = $ionicActionSheet.show({
+            buttons: [
+              { text: 'Singaler et bloquer' },
+              { text: 'Bloquer et supprimer' }
+            ],
+            cancelText: 'Annuler',
+            cancel: function () {
+                // add cancel code..
+            },
+            buttonClicked: function (index) {
+                return true;
+            }
+        });
+
+        // For example's sake, hide the sheet after two seconds
+        /*$timeout(function () {
+            hideSheet();
+        }, 2000);*/
+
+    };
 
     $scope.isFriendOrInvited = false;
 
@@ -353,22 +384,41 @@
 
         var promptPopup = $ionicPopup.prompt({
             title: 'Voulez Vous ?',
-            template: 'This is prompt popup'
+            okText: 'Envoyer',
+            cancelText: 'Annuler'
         }).then(function (res) {
             if (res) {
-                console.log('Your input is ', res);                
+                console.log('Your input is ', res);
                 $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
              { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
              { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
-                
+
             } else {
                 console.log('Please enter input');
             }
 
         });
 
-        
-        
+    }
+
+    $scope.sendInviRech = function () {
+
+        var promptPopup = $ionicPopup.prompt({
+            title: 'Voulez Vous ?',
+            okText: 'Envoyer',
+            cancelText: 'Annuler'
+        }).then(function (res) {
+            if (res) {
+                console.log('Your input is ', res);
+                $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
+             { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
+             { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
+
+            } else {
+                console.log('Please enter input');
+            }
+        });
+
     }
 
 })
