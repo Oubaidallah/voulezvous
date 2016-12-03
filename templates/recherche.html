@@ -14,11 +14,11 @@
         <div class="row responsive-sm">
             <div class="col" style="margin-left:10px;"><input ng-model="search.surnom" placeholder="recherche" /></div>
         </div>
-        <div ng-repeat="p in personnes.personne | filter:search.surnom">
-            <div class="card" ng-if="p.id !='1'">
+        <div ng-repeat="p in personnes.personne | filter:{id:'!'+currentUser.id} " >
+            <div class="card" >
                 <div class="profileWrapper">
                     <div class="picHolder">
-                        <div class="close-btn"><a ng-if="isUser" ng-click="hideUser()">X</a></div>
+                        <div class="close-btn"><a ng-if="isUser" ng-click="deleteProfilRech(p.id,i.id)">X</a></div>
                         <img ng-src="{{p.img}}" ng-click="goInvitDetails(p.id)">
                         {{p.surnom}}, {{p.age}}
                     </div>

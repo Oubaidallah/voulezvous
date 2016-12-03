@@ -117,13 +117,13 @@
             url: 'http://bluepenlabs.com/projects/voulezvous/api.php/message/' + $scope.personne.id,
             data: { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
             success: console.log("ok")
-        });
+        });*/
         $.ajax('http://bluepenlabs.com/projects/voulezvous/api.php/message/' + $scope.personne.id, {
             method: 'PUT',
             contentType: 'application/json',
             processData: false,
             data: JSON.stringify({ "surnom": $scope.personne.surnom, "description": $scope.personne.description })
-        })*/
+        })
         /*$http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.personne.id,
             { "surnom": $scope.personne.surnom, "description": $scope.personne.description },
             { "Content-Type": "application/json" }).then(function (s) { $state.go("monprofile"); }, function (e) { console.log(e); })*/
@@ -160,12 +160,32 @@
     $scope.showConfirm = function () {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Voulez Vous ...',
-            template: 'Quitter le site avec moi ?'
+            template: 'Quitter le site avec moi ?',
+            cancelText: 'Annuler',
+            okText: 'Continuer',
         });
 
         confirmPopup.then(function (res) {
             if (res) {
                 $state.go("confirmationQuitter");
+                console.log('Oui');
+            } else {
+                console.log('Non');
+            }
+        });
+    };
+
+    $scope.showSuppAmis = function () {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Voulez Vous ...',
+            template: 'Supprimer ?',
+            cancelText: 'Annuler',
+            okText: 'Oui',
+        });
+
+        confirmPopup.then(function (res) {
+            if (res) {
+                $scope.deleteInvi();
                 console.log('Oui');
             } else {
                 console.log('Non');
@@ -189,11 +209,10 @@
                 $scope.sendInvi();
                 console.log('Oui');
             } else {
-                //$scope.deleteInvi();
+                $scope.deleteInvi();
                 console.log('Non');
             }
         });
-
     };
 
     $scope.goInvitDetails = function (userClickedId) {
@@ -217,9 +236,21 @@
         $route.reload();
     }
 
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?filter[]=supprimer,eq,1&filter[]=bloquer,eq,1&filter[]=accepter,eq,1&satisfy=any').
+        then(
+            function (r) { console.log(r.data); $scope.invitationss = r.data; },
+            function (e) { console.log(e) }
+        )
+
     $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
         then(
             function (r) { console.log(r.data); $scope.invitations = r.data; },
+            function (e) { console.log(e) }
+        )
+
+    $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/message?filter=msg_recepteurid,eq,' + GetUserId.userId + '?transform=1').
+        then(
+            function (r) { console.log(r.data); $scope.messageshistorique = r.data; },
             function (e) { console.log(e) }
         )
 
@@ -282,7 +313,7 @@
     $scope.sendInvi = function () {
 
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
-            { "envoyer": "0", "annuler": "0", "accepter": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
+            { "envoyer": "0", "bloquer": "0", "accepter": "1", "supprimer": "0", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
             { "Content-Type": "application/json" }).then(function (s) {
                 $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
                 then(
@@ -297,6 +328,33 @@
         $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/' + GetInvId.invId,
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
         $state.go("home");
+        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
+            { "envoyer": "0", "bloquer": "0", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
+            { "Content-Type": "application/json" }).then(function (s) {
+                $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
+                then(
+                    function (r) { console.log(r.data); $scope.invitations = r.data; },
+                    function (e) { console.log(e) }
+                )
+            }, function (e) { console.log(e); })
+        $scope.goMessage();
+    }
+
+    $scope.deleteProfilRech = function (userClickedId, inviClickedId) {
+        GetUserId.userId = userClickedId;
+        GetInvId.invId = inviClickedId;
+        $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/' + GetInvId.invId,
+        { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+        $scope.goRecherche();
+        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
+            { "envoyer": "0", "bloquer": "0", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
+            { "Content-Type": "application/json" }).then(function (s) {
+                $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
+                then(
+                    function (r) { console.log(r.data); $scope.invitations = r.data; },
+                    function (e) { console.log(e) }
+                )
+            }, function (e) { console.log(e); })
     }
 
 
@@ -318,7 +376,7 @@
         )
 })
 
-.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId, FriendsService, $ionicPopup, $ionicActionSheet, $timeout) {
+.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId,GetInvId, FriendsService, $ionicPopup, $ionicActionSheet, $timeout) {
 
     /*FriendsService.checkInvit(1, GetUserId.userId).then(
         function (r) {
@@ -330,12 +388,46 @@
             function (e) { console.log(e) }
         )*/
 
+    $scope.showSignSupp = function () {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Voulez Vous ...',
+            template: 'Signaler et supprimer ?',
+            cancelText: 'Non',
+            okText: 'Oui',
+        });
+
+        confirmPopup.then(function (res) {
+            if (res) {
+                console.log('Oui');
+            } else {
+                console.log('Non');
+            }
+        });
+    };
+
+    $scope.showBloqSupp = function () {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Voulez Vous ...',
+            cancelText: 'Non',
+            okText: 'Oui',
+        });
+
+        confirmPopup.then(function (res) {
+            if (res) {
+                $scope.BloqInvi();
+                console.log('Oui');
+            } else {
+                console.log('Non');
+            }
+        });
+    };
+
     $scope.show = function () {
 
         // Show the action sheet
         var hideSheet = $ionicActionSheet.show({
             buttons: [
-              { text: 'Singaler et bloquer' },
+              { text: 'Signaler et bloquer' },
               { text: 'Bloquer et supprimer' }
             ],
             cancelText: 'Annuler',
@@ -343,7 +435,14 @@
                 // add cancel code..
             },
             buttonClicked: function (index) {
-                return true;
+                if (index == 0) {
+                    hideSheet();
+                    $scope.showSignSupp();
+                }
+                if (index == 1) {
+                    hideSheet();
+                    $scope.showBloqSupp();
+                }
             }
         });
 
@@ -353,6 +452,33 @@
         }, 2000);*/
 
     };
+
+    $scope.nbreCredit = function (nbrCredit) {
+       // alert(nbrCredit);
+        alert($scope.currentUser.nbr_credit);
+    }
+
+    $scope.goInvitDetails = function (userClickedId) {
+        GetUserId.userId = userClickedId;
+        console.log(GetUserId);
+    }
+
+    $scope.BloqInvi = function () {
+
+        $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/' + GetInvId.invId,
+        { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+
+        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
+            { "envoyer": "0", "bloquer": "1", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
+            { "Content-Type": "application/json" }).then(function (s) {
+                $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
+                then(
+                    function (r) { console.log(r.data); $scope.invitations = r.data; },
+                    function (e) { console.log(e) }
+                )
+            }, function (e) { console.log(e); })
+        $scope.goHome();
+    }
 
     $scope.isFriendOrInvited = false;
 
@@ -390,8 +516,8 @@
             if (res) {
                 console.log('Your input is ', res);
                 $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
-             { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
-             { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
+             { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
+             { "Content-Type": "application/json" }).then(function (s) { $scope.goRecherche(); }, function (e) { console.log(e); })
 
             } else {
                 console.log('Please enter input');
@@ -411,7 +537,7 @@
             if (res) {
                 console.log('Your input is ', res);
                 $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
-             { "envoyer": "1", "annuler": "0", "accepter": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
+             { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
              { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
 
             } else {

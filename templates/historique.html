@@ -1,11 +1,13 @@
 ﻿<ion-view cache-view="false">
     <ion-content class="padding has-header has-footer">
         <div class="item item-divider" align="left">Historique ... </div>
-        <div class="list" ng-repeat="m in messagess.message" style="margin:auto;">
-            <a class="item item-avatar" style="border:hidden;" ng-repeat="p in personnes.personne | filter:{id:m.msg_recepteurid} " >
-                <img src="img/who-am-i.jpg" ng-click="goInvitDetails(p.id)">
-                <p ng-click="goHistoriqueDiscussion()">{{p.surnom}}</p>
-            </a>
+        <div ng-repeat="p in personnes.personne">
+            <div class="list"  style="margin:auto;" ng-repeat="m in messagess.message | filter:{msg_recepteurid:currentUser.id}">
+                <a class="item item-avatar" style="border:hidden;" >
+                    <img src="img/who-am-i.jpg" ng-click="goInvitDetails(p.id)">
+                    <p ng-click="goHistoriqueDiscussion()">{{p.surnom}}</p>
+                </a>
+            </div>
         </div>
     </ion-content>
 </ion-view>
