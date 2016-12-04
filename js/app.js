@@ -50,6 +50,11 @@ angular.module('starter', ['ionic'])
         templateUrl: 'templates/recherche.html',
         controller: 'MsgCtrl'
     })
+    .state('voyage', {
+        url: '/voyage',
+        templateUrl: 'templates/voyage.html',
+        controller: 'MyprofCtrl'
+    })
     .state('message', {
         url: '/message',
         templateUrl: 'templates/message.html',

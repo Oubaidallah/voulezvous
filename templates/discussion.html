@@ -1,6 +1,6 @@
 ﻿<ion-view >
     <ion-content class="has-header has-footer">
-        <a href="javascript:history.back()" class="return"><i class="fa fa-reply"></i></a>
+        <a href="javascript:history.back()" style="float:left; display:inline-block;" class="return"><i class="fa fa-reply"></i></a>
         <div ng-repeat="m in messages.message">
             <div>
                 <div class="bubble you" ng-if="m.msg_recepteurid == currentUser.id">
