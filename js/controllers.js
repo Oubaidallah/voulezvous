@@ -351,18 +351,25 @@
         { Name: 'Yémen', Selected: false },
         { Name: 'Zambie', Selected: false },
         { Name: 'Zimbabwe', Selected: false },
-       ];
+    ];
 
-/*$scope.editRecherche = function () {
+    /*$scope.editRecherche = function () {
+    
+        $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
+        { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+    
+        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
+            { "id_user": $scope.currentUser.id, "ageMin": "20", "ageMax": "40", "sexe": $scope.sexe, "distance": $scope.r.distance, "profile": $scope.profile },
+            { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
+        $scope.goMonprofile();
+    }*/
+    $scope.editRecherche = function () {
 
-    $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
-    { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
-
-    $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
-        { "id_user": $scope.currentUser.id, "ageMin": "20", "ageMax": "40", "sexe": $scope.sexe, "distance": $scope.r.distance, "profile": $scope.profile },
-        { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
-    $scope.goMonprofile();
-}*/
+        $http.put('http://bluepenlabs.com/projects/voulezvous/api.php/personne/19',
+            { "surnom": "httthhh", "description": "hhhhhhhh" },
+            { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
+        $scope.goMonprofile();
+    }
 
 
     $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/1').
@@ -371,39 +378,40 @@
             function (e) { console.log(e) }
         );
 
-$scope.editProfile = function () {
-    /*$http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.currentUser.id,
-    { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })*/
+    $scope.editProfile = function () {
+        $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.currentUser.id,
+        { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
-    $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/personne/',
-        {
-            "id_fb": $scope.currentUser.id_fb,
-            "nom": $scope.currentUser.nom,
-            "prenom": $scope.currentUser.prenom,
-            "surnom": $scope.personne.surnom,
-            "age": $scope.currentUser.age,
-            "adresse": $scope.currentUser.adresse,
-            "description": $scope.currentUser.description,
-            "profile": $scope.currentUser.profile,
-            "datenaissance": $scope.currentUser.datenaissance,
-            "recherche": $scope.currentUser.recherche,
-            "fumeur": $scope.currentUser.fumeur,
-            "alcool": $scope.currentUser.alcool,
-            "enfants": $scope.currentUser.enfants,
-            "nb_amis": $scope.currentUser.nb_amis,
-            "nbr_credit": $scope.currentUser.nbr_credit,
-            "img": $scope.currentUser.img
-        },
-        { "Content-Type": "application/json" }).then(function (s) {
-            $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + UserService.getCurrentUser.id + '?transform=1').
-                        then(
-                function (r) { console.log(r.data); $scope.invitations = r.data; },
-                function (e) { console.log(e) }
-            )
-        }, function (e) { console.log(e); })
+        $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/personne/',
+            {
+                "id": $scope.currentUser.id,
+                "id_fb": $scope.currentUser.id_fb,
+                "nom": $scope.currentUser.nom,
+                "prenom": $scope.currentUser.prenom,
+                "surnom": $scope.personne.surnom,
+                "age": $scope.currentUser.age,
+                "adresse": $scope.currentUser.adresse,
+                "description": $scope.currentUser.description,
+                "profile": $scope.currentUser.profile,
+                "datenaissance": $scope.currentUser.datenaissance,
+                "recherche": $scope.currentUser.recherche,
+                "fumeur": $scope.currentUser.fumeur,
+                "alcool": $scope.currentUser.alcool,
+                "enfants": $scope.currentUser.enfants,
+                "nb_amis": $scope.currentUser.nb_amis,
+                "nbr_credit": $scope.currentUser.nbr_credit,
+                "img": $scope.currentUser.img
+            },
+            { "Content-Type": "application/json" }).then(function (s) {
+                $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + UserService.getCurrentUser.id + '?transform=1').
+                            then(
+                    function (r) { console.log(r.data); $scope.invitations = r.data; },
+                    function (e) { console.log(e) }
+                )
+            }, function (e) { console.log(e); })
 
-    $scope.goProfile();
-}
+        $scope.goProfile();
+    }
 
 })
 
@@ -474,6 +482,37 @@ $scope.editProfile = function () {
 
         confirmPopup.then(function (res) {
             if (res) {
+                // ajouter +1 dans la table personne.nbr_amis
+                $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + $scope.currentUser.id,
+                { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+
+                $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/personne/',
+                    {
+                        "id": $scope.currentUser.id,
+                        "id_fb": $scope.currentUser.id_fb,
+                        "nom": $scope.currentUser.nom,
+                        "prenom": $scope.currentUser.prenom,
+                        "surnom": $scope.currentUser.surnom,
+                        "age": $scope.currentUser.age,
+                        "adresse": $scope.currentUser.adresse,
+                        "description": $scope.currentUser.description,
+                        "profile": $scope.currentUser.profile,
+                        "datenaissance": $scope.currentUser.datenaissance,
+                        "recherche": $scope.currentUser.recherche,
+                        "fumeur": $scope.currentUser.fumeur,
+                        "alcool": $scope.currentUser.alcool,
+                        "enfants": $scope.currentUser.enfants,
+                        "nb_amis": parseInt($scope.currentUser.nb_amis) + parseInt(1),
+                        "nbr_credit": $scope.currentUser.nbr_credit,
+                        "img": $scope.currentUser.img
+                    },
+                    { "Content-Type": "application/json" }).then(function (s) {
+                        $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/personne/' + UserService.getCurrentUser.id + '?transform=1').
+                                    then(
+                            function (r) { console.log(r.data); $scope.invitations = r.data; },
+                            function (e) { console.log(e) }
+                        )
+                    }, function (e) { console.log(e); })
                 //$scope.personne.nbr_credit = $scope.personne.nbr_credit - 1;
                 $scope.deleteInvi();
                 $scope.sendInvi();
@@ -547,7 +586,17 @@ $scope.editProfile = function () {
             function (e) { console.log(e) }
         )
 
-
+    $scope.verifAmis = function () {
+        UserService.getCurrentUser().then(
+            function (r) {
+                console.log(r.data); $scope.currentUser = r.data;
+                if ($scope.currentUser.nb_amis > 5) {
+                    alert('Vous avez plus que 5 amis');
+                }
+            },
+            function (e) { console.log(e) }
+        )
+    }
 
     $scope.addMessage = function () {
         $scope.getDatetime = new Date();
@@ -617,7 +666,7 @@ $scope.editProfile = function () {
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
         $scope.goRecherche();
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/invitation/',
-            { "envoyer": "0", "bloquer": "0", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
+            { "envoyer": "0", "bloquer": "0", "accepter": "0", "supprimer": "1", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id },
             { "Content-Type": "application/json" }).then(function (s) {
                 $http.get('http://bluepenlabs.com/projects/voulezvous/api.php/invitation?transform=1').
                 then(
@@ -646,7 +695,7 @@ $scope.editProfile = function () {
         )
 })
 
-.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId,GetInvId, FriendsService, $ionicPopup, $ionicActionSheet, $timeout) {
+.controller('ProfCtrl', function ($scope, $http, UserService, GetUserId, GetInvId, FriendsService, $ionicPopup, $ionicActionSheet, $timeout) {
 
     /*FriendsService.checkInvit(1, GetUserId.userId).then(
         function (r) {
