@@ -1,0 +1,24 @@
+﻿<ion-view cache-view="false">
+    <ion-content class="has-header has-footer">
+        <div class="list">
+            <div class="row">
+                <div class="col"><a href="javascript:history.back()" class="button icon-left ion-chevron-left button-clear button-dark"></a></div>
+                <div class="col"></div>
+                <div class="col" style="margin-top:15px;margin-left:20px;">Voyage</div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Pays :
+                </div>
+                <select>
+                    <option ng-repeat="typPays in TypePays" value="{{typPays.Name}}"
+                            ng-selected="{{ typPays.Selected == true }}">
+                        {{typPays.Name}}
+                    </option>
+                </select>
+            </label>
+        </div>
+    </ion-content>
+</ion-view>

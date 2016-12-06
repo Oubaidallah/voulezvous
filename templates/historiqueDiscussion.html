@@ -1,0 +1,26 @@
+﻿<ion-view>
+    <ion-content padding="true" class="has">
+        <a href="javascript:history.back()" class="return"><i class="fa fa-reply"></i></a>
+        <div ng-repeat="m in messages.message">
+            <div>
+                <div class="bubble you" ng-if="m.msg_recepteurid == currentUser.id">
+                    {{ m.message }}
+                </div>
+            </div>
+            <div style="clear:both"></div>
+            <div>
+                <div class="bubble me" ng-if="m.msg_emetteurid == currentUser.id">
+                    {{ m.message }}
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </ion-content>
+</ion-view>
+<ion-footer-bar class="bar-subfooter" style="margin:auto;">
+    <div class="bar bar-header item-input-inset" ng-controller="ProfCtrl" style:"margin:auto;">
+        <button class="button  button-full button-clear button-royal " style="background-color:hotpink;" ng-click="sendInvi()">
+            Voulez Vous ?
+        </button>
+    </div>
+</ion-footer-bar>
