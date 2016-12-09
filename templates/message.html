@@ -6,7 +6,7 @@
             <div class="row" style="margin-top:-10px;margin-bottom:-20px" ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}" ng-click="getUserInvID(p.id)">
                 <div class="col col-75" style="margin:auto;" ng-click="verifAmis()">
                     <a class="item item-avatar" style="border:none;margin:auto;">
-                        <img src="img/who-am-i.jpg" ng-click="goInvitDetails(p.id)">
+                        <img ng-src="{{p.img}}" ng-click="goInvitDetails(p.id)">
                         <h2 ng-click="goDiscussion()" style="margin-top:-7px;">{{p.surnom}}</h2>
                         <p ng-click="goDiscussion()">Discussion ...</p>
                     </a>
@@ -21,7 +21,7 @@
         <div class="list" style="margin:auto;" ng-repeat="i in invitations.invitation | filter:{envoyer:currentUser.id} | filter:{inv_recepteurid:currentUser.id}" ng-click="getInvId(i.id)">
             <div style="border:hidden;" ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}" ng-click="getUserInvID(p.id)">
                 <a class="item item-avatar" style="border:hidden;">
-                    <img src="img/who-am-i.jpg" width="10" height="12" ng-click="goInvitDetails(p.id)">
+                    <img ng-src="{{p.img}}" width="10" height="12" ng-click="goInvitDetails(p.id)">
                     <h2 style="margin-top:-8px" ng-click="showConfirmInvi()">{{p.surnom}}</h2>
                     <p ng-model="invmessage" ng-click="showConfirmInvi()">{{i.message}}</p>
                 </a>

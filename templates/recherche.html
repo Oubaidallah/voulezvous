@@ -1,8 +1,15 @@
-﻿<ion-view cache-view="false" overflow-scroll="false">
-    <ion-content class="has-header has-footer">
+﻿<ion-header-bar>
+    <div class="bar bar-subheader">
+        <div class="row responsive-sm">
+            <div class="col" style="margin-left:10px;"><input ng-model="search" placeholder="recherche" /></div>
+        </div>
+    </div>
+</ion-header-bar>
+<ion-view cache-view="false" overflow-scroll="false">
+    <ion-content class="has-header has-footer has-subheader">
         <div class="row">
             <div class="col col-75" style="margin-left:10px;" ng-click="goRecherchePerso()">Ma recherche</div>
-            <div class="col" style="margin-left:10px;">
+            <div class="col" style="margin-left:10px;margin-top:-7px;">
                 <label class="toggle toggle-positive">
                     <input type="checkbox">
                     <div class="track">
@@ -11,14 +18,12 @@
                 </label>
             </div>
         </div>
-        <div class="row responsive-sm">
-            <div class="col" style="margin-left:10px;"><input ng-model="search.surnom" placeholder="recherche" /></div>
-        </div>
-        <div ng-repeat="p in personnes.personne | filter:{id:'!'+currentUser.id} " >
-            <div class="card" >
+        <p hidden ng-repeat="invi in invitt">{{invi.inv_emetteurid}} * {{invi.inv_recepteurid}}</p>
+        <div>
+            <div class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id}}">
                 <div class="profileWrapper">
                     <div class="picHolder">
-                        <div class="close-btn"><a ng-if="isUser" ng-click="deleteProfilRech(p.id,i.id)">X</a></div>
+                        <div class="close-btn"><a ng-if="isUser" ng-click="showList()">X</a></div>
                         <img ng-src="{{p.img}}" ng-click="goInvitDetails(p.id)">
                         {{p.surnom}}, {{p.age}}
                     </div>

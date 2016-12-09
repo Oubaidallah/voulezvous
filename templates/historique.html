@@ -4,7 +4,7 @@
         <div ng-repeat="p in personnes.personne">
             <div class="list"  style="margin:auto;" ng-repeat="m in messagess.message | filter:{msg_recepteurid:currentUser.id}">
                 <a class="item item-avatar" style="border:hidden;" >
-                    <img src="img/who-am-i.jpg" ng-click="goInvitDetails(p.id)">
+                    <img ng-src="{{p.img}}" ng-click="goInvitDetails(p.id)">
                     <p ng-click="goHistoriqueDiscussion()">{{p.surnom}}</p>
                 </a>
             </div>

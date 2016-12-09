@@ -1,6 +1,8 @@
-﻿<ion-view >
-    <ion-content class="has-header has-footer">
-        <a href="javascript:history.back()" style="float:left; display:inline-block;" class="return"><i class="fa fa-reply"></i></a>
+﻿<div class="bar bar-subheader" style="height:auto;border:hidden;">
+    <a href="javascript:history.back()" style="float:left; display:inline-block;" class="return"><i class="fa fa-reply"></i></a>
+</div>
+<ion-view>
+    <ion-content class="has-header has-subheader has-footer">
         <div ng-repeat="m in messages.message">
             <div>
                 <div class="bubble you" ng-if="m.msg_recepteurid == currentUser.id">
@@ -8,14 +10,14 @@
                 </div>
             </div>
             <div style="clear:both"></div>
-            <div >
+            <div>
                 <div class="bubble me" ng-if="m.msg_emetteurid == currentUser.id">
                     {{ m.message }}
                 </div>
             </div>
             <div style="clear:both"></div>
         </div>
-    </ion-content>    
+    </ion-content>
 </ion-view>
 <ion-footer-bar class="bar-subfooter">
     <div class="bar bar-header item-input-inset">

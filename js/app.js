@@ -33,7 +33,7 @@ angular.module('starter', ['ionic'])
     .state('home', {
         url: '/home',
         templateUrl: 'templates/home.html',
-        controller: 'AppCtrl'
+        controller: 'MyprofCtrl'
     })
     .state('monprofile', {
         url: '/monprofile',
@@ -73,6 +73,11 @@ angular.module('starter', ['ionic'])
     .state('discussion', {
         url: '/discussion',
         templateUrl: 'templates/discussion.html',
+        controller: 'MsgCtrl'
+    })
+    .state('discussionBloquer', {
+        url: '/discussionBloquer',
+        templateUrl: 'templates/discussionBloquer.html',
         controller: 'MsgCtrl'
     })
     .state('profile', {

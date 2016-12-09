@@ -1,36 +1,8 @@
 ﻿<ion-view>
     <ion-content class="has-header has-footer">
-       <!-- <div>
-            <ion-view id="image-view">
-                <ion-slide-box show-pager="true">
-                    <ion-slide>
-                        <div class="container-fluid">
-                            <div class="col-xs-4 col-xs-offset-4" id="profilePic">
-                                <img src="../img/match.jpg" ng-click="goMonprofile()">
-                            </div>
-                        </div>
-                    </ion-slide>
-                    <ion-slide>
-                        <div class="container-fluid">
-                            <div class="col-xs-4 col-xs-offset-4" id="profilePic">
-                                <img src="../img/icon.png" ng-click="goMonprofile()">
-                            </div>
-                        </div>         
-                    </ion-slide>
-                    <ion-slide>
-                        <div class="container-fluid">
-                            <div class="col-xs-4 col-xs-offset-4" id="profilePic">
-                                <img src="../img/profile.jpg" ng-click="goMonprofile()">
-                            </div>
-                        </div>                    
-                    </ion-slide>
-                </ion-slide-box>
-            </ion-view>
-        </div>
-           -->
         <div class="container-fluid">
             <div class="col-xs-4 col-xs-offset-4" id="profilePic">
-                <img src="/img/profilee.jpg" ng-click="goMonprofile()">
+                <img ng-src="{{personne.img}}" ng-click="goMonprofile()">
             </div>
         </div>
         <div class="list" >
