@@ -580,6 +580,7 @@
             if (res) {
                 $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+                $scope.AcceptInvi();
                 // ajouter +1 dans la table personne.nbr_amis
                 $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
@@ -609,7 +610,6 @@
                         UserService.getCurrentUser();
                         window.location.reload(true);
                     }, function (e) { console.log(e); })
-                $scope.sendInvi();
                 console.log('Oui');
             } else {
                 $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
@@ -756,7 +756,7 @@
         $scope.myImgUrl = personnes.img;
     }
 
-    $scope.sendInvi = function () {
+    $scope.AcceptInvi = function () {
 
         $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/',
             { "envoyer": "0", "bloquer": "0", "accepter": "1", "supprimer": "0", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
