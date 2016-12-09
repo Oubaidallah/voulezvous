@@ -2,12 +2,12 @@
 .factory('UserService', ['$http', function ($http) {
     var userId = 1;
     function getCurrentUser() {
-        
         return $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + userId ).
         then(
             function (r) { return r; },
             function (e) { }
         );
+        $window.location.reload();
     }
     function getAllUser() {
         return $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne?transform=1').

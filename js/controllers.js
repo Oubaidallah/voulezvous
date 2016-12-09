@@ -504,7 +504,7 @@
             buttonClicked: function (index) {
                 if (index == 1) {
                     hideSheet();
-                    $scope.showBloqSupp(); 
+                    $scope.showBloqSupp();
                 }
                 if (index == 2) {
                     hideSheet();
@@ -530,7 +530,9 @@
 
         confirmPopup.then(function (res) {
             if (res) {
-                $scope.deleteInvi();
+                $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
+                { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+
                 $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
@@ -576,6 +578,8 @@
 
         confirmPopup.then(function (res) {
             if (res) {
+                $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
+                { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
                 // ajouter +1 dans la table personne.nbr_amis
                 $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
@@ -604,12 +608,13 @@
                         UserService.getCurrentUser();
                         window.location.reload(true);
                     }, function (e) { console.log(e); })
-                
-                $scope.deleteInvi();
                 $scope.sendInvi();
                 console.log('Oui');
             } else {
-                $scope.deleteInvi();
+                $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
+                { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+                UserService.getCurrentUser();
+                window.location.reload(true);
                 console.log('Non');
             }
         });
@@ -707,10 +712,10 @@
         UserService.getCurrentUser().then(
             function (r) {
                 console.log(r.data); $scope.currentUser = r.data;
-                if ($scope.currentUser.nb_amis > 5) {                    
+                if ($scope.currentUser.nb_amis > 5) {
                     //alert('Vous avez plus que 5 amis');
                     $scope.goDiscussionBloquer();
-                    $scope.showAlertAmisLimite();                    
+                    $scope.showAlertAmisLimite();
                 }
             },
             function (e) { console.log(e) }
