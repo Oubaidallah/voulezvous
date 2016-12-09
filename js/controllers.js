@@ -583,7 +583,8 @@
                 // ajouter +1 dans la table personne.nbr_amis
                 $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
-
+                UserService.getCurrentUser();
+                window.location.reload(true);
                 $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/',
                     {
                         "id": $scope.currentUser.id,
@@ -717,6 +718,8 @@
                     $scope.goDiscussionBloquer();
                     $scope.showAlertAmisLimite();
                 }
+                else
+                    $scope.goDiscussion();
             },
             function (e) { console.log(e) }
         )

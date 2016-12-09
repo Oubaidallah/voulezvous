@@ -15,6 +15,7 @@
             function (r) { return r; },
             function (e) { }
         );
+        $window.location.reload();
     }
     return {
         getCurrentUser, getAllUser

@@ -1,14 +1,15 @@
 ﻿<ion-view cache-view="false">
     <ion-content class="padding has-header has-footer">
         <div class="item item-divider" align="left">Je veux quitter le site avec ... </div>
-        <div ng-if="nbrAmis.value === 'false'">faux !!!!!!!!</div>
         <div class="list" style="margin:auto;" ng-repeat="i in invitations.invitation | filter:{accepter:'1'} | filter:{inv_recepteurid:currentUser.id}" ng-click="getInvId(i.id)">
             <div class="row" style="margin-top:-10px;margin-bottom:-20px" ng-repeat="p in personnes.personne | filter:{id:i.inv_emetteurid}" ng-click="getUserInvID(p.id)">
-                <div class="col col-75" style="margin:auto;" ng-click="verifAmis()">
+                <div class="col col-75" style="margin:auto;" >
                     <a class="item item-avatar" style="border:none;margin:auto;">
                         <img ng-src="{{p.img}}" ng-click="goInvitDetails(p.id)">
-                        <h2 ng-click="goDiscussion()" style="margin-top:-7px;">{{p.surnom}}</h2>
-                        <p ng-click="goDiscussion()">Discussion ...</p>
+                        <h2 ng-click="verifAmis()" style="margin-top:-7px;">{{p.surnom}}</h2>
+                        <p ng-click="verifAmis()">Discussion ...</p>
+                        <!--<h2 ng-click="goDiscussion()" style="margin-top:-7px;">{{p.surnom}}</h2>
+                        <p ng-click="goDiscussion()">Discussion ...</p>-->
                     </a>
                 </div>
                 <div class="col col-bottom"  style="margin:auto;">
