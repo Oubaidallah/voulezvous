@@ -18,9 +18,9 @@
                 </label>
             </div>
         </div>
-        <p hidden ng-repeat="invi in invitt">{{invi.inv_emetteurid}} * {{invi.inv_recepteurid}}</p>
+        <!--<p hidden ng-repeat="invi in invitt">{{invi.inv_emetteurid}} * {{invi.inv_recepteurid}}</p>-->
         <div>
-            <div class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id}}">
+            <div class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id}">
                 <div class="profileWrapper">
                     <div class="picHolder">
                         <div class="close-btn"><a ng-if="isUser" ng-click="showList()">X</a></div>
