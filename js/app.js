@@ -40,6 +40,11 @@ angular.module('starter', ['ionic'])
         templateUrl: 'templates/monprofile.html',
         controller: 'MyprofCtrl'
     })
+    .state('monProfilee', {
+        url: '/monProfilee',
+        templateUrl: 'templates/monProfilee.html',
+        controller: 'MyprofCtrl'
+    })
     .state('editProfile', {
         url: '/editProfile',
         templateUrl: 'templates/editProfile.html',

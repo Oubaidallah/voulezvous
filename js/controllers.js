@@ -2,6 +2,7 @@
 .controller('AppCtrl', function ($scope, $state) {
     $scope.goHome = function () { $state.go("home"); }
     $scope.goMonprofile = function () { $state.go("monprofile"); }
+    $scope.goMonProfilee = function () { $state.go("monProfilee"); }
     $scope.goEditProfile = function () { $state.go("editProfile"); }
     $scope.goRecherche = function () { $state.go("recherche"); }
     $scope.goMessage = function () { $state.go("message"); }
@@ -468,7 +469,7 @@
         });
     };
 
-    $scope.showBloqSupp = function () {
+    $scope.showBloqSupp = function (item) {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Voulez Vous ...',
             cancelText: 'Non',
@@ -477,15 +478,33 @@
 
         confirmPopup.then(function (res) {
             if (res) {
-                $scope.BloqInvi();
+                $scope.removeRecherche();
+                $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
+                { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+
+                $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/',
+                    { "envoyer": "0", "bloquer": "1", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": item },
+                    { "Content-Type": "application/json" }).then(function (s) {
+                        $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation?transform=1').
+                        then(
+                            function (r) { console.log(r.data); $scope.invitations = r.data; },
+                            function (e) { console.log(e) }
+                        )
+                    }, function (e) { console.log(e); })
+                window.location.reload(true);
                 console.log('Oui');
             } else {
                 console.log('Non');
             }
         });
     };
+    
+    $scope.removeRecherche = function (item) {
+        var myEl = angular.element(document.querySelector('#divID'));
+        myEl.remove();
+    }
 
-    $scope.showList = function () {
+    $scope.showList = function (d) {
 
         // Show the action sheet
         var hideSheet = $ionicActionSheet.show({
@@ -499,9 +518,13 @@
                 // add cancel code..
             },
             buttonClicked: function (index) {
+                if (index == 0) {
+                    hideSheet();
+                    $scope.removeRecherche(d);
+                }
                 if (index == 1) {
                     hideSheet();
-                    $scope.showBloqSupp();
+                    $scope.showBloqSupp(d);
                 }
                 if (index == 2) {
                     hideSheet();
@@ -644,7 +667,6 @@
         then(
             function (r) {
                 console.log(r.data); $scope.invitationsVerif = r.data;
-                $scope.invitt = $scope.invitationsVerif.invitation;
             },
             function (e) { console.log(e) }
         )
@@ -846,6 +868,11 @@
                 console.log('Non');
             }
         });
+    };
+
+    $scope.supp = function (x) {
+        var divInterne = document.getElementById(x);
+        var ancienNoeud = document.removeChild(divInterne);
     };
 
     $scope.showBloqSupp = function () {
