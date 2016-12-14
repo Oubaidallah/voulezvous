@@ -45,6 +45,11 @@ angular.module('starter', ['ionic'])
         templateUrl: 'templates/monProfilee.html',
         controller: 'MyprofCtrl'
     })
+    .state('listeSuppBloq', {
+        url: '/listeSuppBloq',
+        templateUrl: 'templates/listeSuppBloq.html',
+        controller: 'MsgCtrl'
+    })
     .state('editProfile', {
         url: '/editProfile',
         templateUrl: 'templates/editProfile.html',

@@ -13,6 +13,7 @@
     $scope.goQuestion = function () { $state.go("question"); }
     $scope.goProfile = function () { $state.go("profile"); }
     $scope.goHistorique = function () { $state.go("historique"); }
+    $scope.goListeSuppBloq = function () { $state.go("listeSuppBloq"); }
     $scope.goHistoriqueDiscussion = function () { $state.go("historiqueDiscussion"); }
     $scope.goRecherchePerso = function () { $state.go("recherchePerso"); }
     $scope.goVisibilitePerso = function () { $state.go("visibilitePerso"); }
@@ -412,12 +413,6 @@
 
 .controller('MsgCtrl', function ($scope, $http, UserService, $state, GetUserId, GetInvId, $ionicPopup, FriendsService, $ionicActionSheet, $timeout,$ionicScrollDelegate) {
 
-    $scope.isUser = true;
-
-    $scope.hideUser = function () {
-        $scope.isUser = false;
-    }
-
     $scope.scrollDown = function () {
         $ionicScrollDelegate.scrollBottom();
     };
@@ -431,6 +426,26 @@
         alertPopup.then(function (res) {
             $state.go("home");
             console.log('quitter est fait');
+        });
+    };
+    
+    $scope.annulerSuppBloq = function (idInvi) {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Voulez Vous ...',
+            template: 'annuler Supp/Bloq ?',
+            cancelText: 'Annuler',
+            okText: 'Continuer',
+        });
+
+        confirmPopup.then(function (res) {
+            if (res) {
+                $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + idInvi,
+                { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+                window.location.reload(true);
+                console.log('Oui');
+            } else {
+                console.log('Non');
+            }
         });
     };
 
@@ -491,7 +506,6 @@
                             function (e) { console.log(e) }
                         )
                     }, function (e) { console.log(e); })
-                window.location.reload(true);
                 console.log('Oui');
             } else {
                 console.log('Non');
@@ -540,7 +554,7 @@
 
     };
 
-    $scope.showSuppAmis = function () {
+    $scope.showSuppAmis = function (item) {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Voulez Vous ...',
             template: 'Supprimer ?',
@@ -552,6 +566,16 @@
             if (res) {
                 $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+
+                $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/',
+                    { "envoyer": "0", "bloquer": "0", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": item },
+                    { "Content-Type": "application/json" }).then(function (s) {
+                        $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation?transform=1').
+                        then(
+                            function (r) { console.log(r.data); $scope.invitations = r.data; },
+                            function (e) { console.log(e) }
+                        )
+                    }, function (e) { console.log(e); })
 
                 $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
@@ -592,7 +616,7 @@
         var confirmPopup = $ionicPopup.confirm({
             title: 'Voulez Vous ...',
             template: '<p>{{i.message}}</p>',
-            cancelText: 'Supprimer',
+            cancelText: 'Annuler',
             okText: 'Accepter',
         });
 
@@ -632,10 +656,10 @@
                     }, function (e) { console.log(e); })
                 console.log('Oui');
             } else {
-                $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
+                $/*http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/' + GetInvId.invId,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
                 UserService.getCurrentUser();
-                window.location.reload(true);
+                window.location.reload(true);*/
                 console.log('Non');
             }
         });

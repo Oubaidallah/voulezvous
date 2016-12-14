@@ -19,10 +19,10 @@
             </div>
         </div>
         <div>
-            <div id="divID" class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id}" >
-                <div class="profileWrapper" >
+            <div id="divID" class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id}">
+                <div class="profileWrapper">
                     <div class="picHolder">
-                        <div class="close-btn"><a ng-if="isUser" ng-click="showList(p.id)">X</a></div>
+                        <div class="close-btn"><a  ng-click="showList(p.id)">X</a></div>
                         <img ng-src="{{p.img}}" ng-click="goInvitDetails(p.id)">
                         {{p.surnom}}, {{p.age}}
                     </div>
