@@ -9,9 +9,9 @@
                 <div class="col"></div>
             </div>
             <div>
-                <div class="item range">
+                <div class="item range" >
                     <i>Min</i>
-                    <input type="range" name="age" min="ageMin" max="ageMax">
+                    <input type="range" name="age" min="ageMin" max="ageMax" multiple>
                     <i>Max</i>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="item range">
                     <i>Km</i>
-                    <input type="range" min="0" max="100">
+                    <input type="range" ng-model="recherches.recherche.distance" min="{{DistMin}}"  max="{{DistMax}}">
                     <i>Km</i>
                 </div>
             </div>

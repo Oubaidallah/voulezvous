@@ -44,8 +44,8 @@
 
 .controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate, UserService, $ionicPopup) {
 
-    $scope.ageMin = 18;
-    $scope.ageMax = 80;
+    $scope.DistMin = 0;
+    $scope.DistMax = 150;
 
     $scope.showAlert = function () {
         var alertPopup = $ionicPopup.alert({
@@ -66,7 +66,11 @@
 
     $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/recherche?filter=id,eq,' + 1 + '?transform=1').
         then(
-            function (r) { console.log(r.data); $scope.recherches = r.data; },
+            function (r) {
+                console.log(r.data);
+                $scope.recherches = r.data;
+
+            },
             function (e) { console.log(e) }
         )
 
@@ -77,22 +81,10 @@
     ];
 
     $scope.typeProfil = [
-        { Name: 'INTJ', Selected: true },
-        { Name: 'INTP', Selected: false },
-        { Name: 'ENTJ', Selected: false },
-        { Name: 'ENTP', Selected: false },
-        { Name: 'INFJ', Selected: false },
-        { Name: 'INFP', Selected: false },
-        { Name: 'ENFJ', Selected: false },
-        { Name: 'ENFP', Selected: false },
-        { Name: 'ISTJ', Selected: false },
-        { Name: 'ISFJ', Selected: false },
-        { Name: 'ESTJ', Selected: false },
-        { Name: 'ESFJ', Selected: false },
-        { Name: 'ISTP', Selected: false },
-        { Name: 'ISFP', Selected: false },
-        { Name: 'ESTP', Selected: false },
-        { Name: 'ESFP', Selected: false },
+        { Name: 'Catégorie 1', Selected: true },
+        { Name: 'Catégorie 2', Selected: false },
+        { Name: 'Catégorie 3', Selected: false },
+        { Name: 'Catégorie 4', Selected: false }
     ];
 
     $scope.TypePays = [
@@ -170,7 +162,7 @@
         { Name: 'Éthiopie', Selected: false },
         { Name: 'ex-République yougoslave de Macédoine', Selected: false },
         { Name: 'Finlande', Selected: false },
-        { Name: 'France', Selected: false },
+        { Name: 'France', Selected: true },
         { Name: 'Gabon', Selected: false },
         { Name: 'Gambie', Selected: false },
         { Name: 'Gaza Strip', Selected: false },
@@ -379,7 +371,8 @@
             function (e) { console.log(e) }
         );
 
-    $scope.editProfile = function () {
+    $scope.editProfilee = function () {
+
         $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + $scope.currentUser.id,
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
@@ -406,23 +399,27 @@
             { "Content-Type": "application/json" }).then(function (s) {
                 $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + UserService.getCurrentUser.id + '?transform=1').
                             then(
-                    function (r) { console.log(r.data); $scope.invitations = r.data; },
+                    function (r) { console.log(r.data); $scope.invitations = r.data;  },
                     function (e) { console.log(e) }
                 )
             }, function (e) { console.log(e); })
-
-        $scope.goProfile();
+        $scope.goMonprofile();
+        window.location.reload(true);
     }
 
 })
 
-.controller('MsgCtrl', function ($scope, $http, UserService, $state, GetUserId, GetInvId, $ionicPopup, FriendsService, $ionicActionSheet, $timeout) {
+.controller('MsgCtrl', function ($scope, $http, UserService, $state, GetUserId, GetInvId, $ionicPopup, FriendsService, $ionicActionSheet, $timeout,$ionicScrollDelegate) {
 
     $scope.isUser = true;
 
     $scope.hideUser = function () {
         $scope.isUser = false;
     }
+
+    $scope.scrollDown = function () {
+        $ionicScrollDelegate.scrollBottom();
+    };
 
     $scope.showAlert = function () {
         var alertPopup = $ionicPopup.alert({
@@ -901,7 +898,7 @@
 
     $scope.nbreCredit = function (nbrCredit) {
         // alert(nbrCredit);
-        alert($scope.currentUser.nbr_credit);
+        //alert($scope.currentUser.nbr_credit);
     }
 
     $scope.goInvitDetails = function (userClickedId) {
@@ -952,6 +949,17 @@
             function (e) { console.log(e) }
         );
 
+    $scope.showAlertCredit = function () {
+        var alertPopup = $ionicPopup.alert({
+            title: '',
+            template: 'Pas de Crédit !'
+        });
+
+        alertPopup.then(function (res) {
+            console.log('Thank you for not eating my delicious ice cream cone');
+        });
+    };
+
     $scope.sendInvi = function () {
 
         var promptPopup = $ionicPopup.prompt({
@@ -960,11 +968,48 @@
             cancelText: 'Annuler'
         }).then(function (res) {
             if (res) {
+                $scope.GetnbrCredit = parseInt($scope.currentUser.nbr_credit);
+                if ($scope.GetnbrCredit <= 0) {
+                    $scope.showAlertCredit();
+                } else {
                 console.log('Your input is ', res);
                 $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/',
-             { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
-             { "Content-Type": "application/json" }).then(function (s) { $scope.goRecherche(); }, function (e) { console.log(e); })
+                     { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
+                     { "Content-Type": "application/json" }).then(function (s) { $scope.goRecherche(); }, function (e) { console.log(e); })
 
+                $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + $scope.currentUser.id,
+                { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+
+                UserService.getCurrentUser();
+                window.location.reload(true);
+                $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/',
+                    {
+                        "id": $scope.currentUser.id,
+                        "id_fb": $scope.currentUser.id_fb,
+                        "nom": $scope.currentUser.nom,
+                        "prenom": $scope.currentUser.prenom,
+                        "surnom": $scope.currentUser.surnom,
+                        "age": $scope.currentUser.age,
+                        "adresse": $scope.currentUser.adresse,
+                        "description": $scope.currentUser.description,
+                        "profile": $scope.currentUser.profile,
+                        "datenaissance": $scope.currentUser.datenaissance,
+                        "recherche": $scope.currentUser.recherche,
+                        "fumeur": $scope.currentUser.fumeur,
+                        "alcool": $scope.currentUser.alcool,
+                        "enfants": $scope.currentUser.enfants,
+                        "nb_amis": $scope.currentUser.nb_amis,
+                        "nbr_credit": parseInt($scope.currentUser.nbr_credit) - parseInt(1),
+                        "img": $scope.currentUser.img
+                    },
+                    { "Content-Type": "application/json" }).then(function (s) {
+                        UserService.getCurrentUser();
+                        
+                        
+                    }, function (e) { console.log(e); })
+                $scope.goRecherche();
+                window.location.reload(true);
+                }
             } else {
                 console.log('Please enter input');
             }
@@ -981,11 +1026,46 @@
             cancelText: 'Annuler'
         }).then(function (res) {
             if (res) {
-                console.log('Your input is ', res);
-                $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/',
-             { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
-             { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
+                $scope.GetnbrCredit = parseInt($scope.currentUser.nbr_credit);
+                if ($scope.GetnbrCredit <= 0) {
+                    $scope.showAlertCredit();
+                } else {
+                    console.log('Your input is ', res);
+                    $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/invitation/',
+                         { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
+                         { "Content-Type": "application/json" }).then(function (s) { $scope.goRecherche(); }, function (e) { console.log(e); })
 
+                    $http.delete('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + $scope.currentUser.id,
+                    { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+
+                    UserService.getCurrentUser();
+                    window.location.reload(true);
+                    $http.post('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/',
+                        {
+                            "id": $scope.currentUser.id,
+                            "id_fb": $scope.currentUser.id_fb,
+                            "nom": $scope.currentUser.nom,
+                            "prenom": $scope.currentUser.prenom,
+                            "surnom": $scope.currentUser.surnom,
+                            "age": $scope.currentUser.age,
+                            "adresse": $scope.currentUser.adresse,
+                            "description": $scope.currentUser.description,
+                            "profile": $scope.currentUser.profile,
+                            "datenaissance": $scope.currentUser.datenaissance,
+                            "recherche": $scope.currentUser.recherche,
+                            "fumeur": $scope.currentUser.fumeur,
+                            "alcool": $scope.currentUser.alcool,
+                            "enfants": $scope.currentUser.enfants,
+                            "nb_amis": $scope.currentUser.nb_amis,
+                            "nbr_credit": parseInt($scope.currentUser.nbr_credit) - parseInt(1),
+                            "img": $scope.currentUser.img
+                        },
+                        { "Content-Type": "application/json" }).then(function (s) {
+                            UserService.getCurrentUser();
+                        }, function (e) { console.log(e); })
+                    $scope.goRecherche();
+                    window.location.reload(true);
+                }
             } else {
                 console.log('Please enter input');
             }

@@ -1,7 +1,7 @@
 ﻿<div class="bar bar-subheader" style="height:auto;border:hidden;">
     <a href="javascript:history.back()" style="float:left; display:inline-block;" class="return"><i class="fa fa-reply"></i></a>
 </div>
-<ion-view>
+<ion-view ng-click="scrollDown()">
     <ion-content class="has-header has-subheader has-footer">
         <div ng-repeat="m in messages.message">
             <div>
