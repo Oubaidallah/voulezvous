@@ -1,0 +1,36 @@
+﻿<ion-view>
+    <ion-content class="has-header has-footer">
+        <div class="coverContainer">
+            <a href="javascript:history.back()" class="return"><i class="fa fa-reply"></i></a>
+            <a class="flagIt" ng-click="show()"><i class="fa fa-flag"></i></a>
+            <img src="img/pic6.jpg">
+            <div class="profileInfo">
+                <div class="container-fluid">
+                    <div class="col-xs-8">{{personne.surnom}} , {{personne.age}}</div>
+                    <div class="col-xs-4 text-right">({{personne.profile}})</div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid spaceIt">
+            {{personne.description}}
+        </div>
+        <div class="container-fluid spaceIt">
+            Description MBTI
+        </div>
+        <div class="container-fluid">
+            <div class="col-xs-8">
+                <p>Fumeur : {{personne.fumeur}}</p>
+                <p>Alcool : {{personne.alcool}} </p>
+                <p>Enfants : {{personne.enfants}}</p>
+            </div>
+            <div class="col-xs-4 personaltyIcon">
+                <img src="img/icon.png">
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+<ion-footer-bar class="bar-subfooter">
+    <button class="button  button-full button-clear button-royal" ng-click="goEditProfile()">
+        Modifier mon profile
+    </button>
+</ion-footer-bar>

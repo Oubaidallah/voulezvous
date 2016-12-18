@@ -1,0 +1,13 @@
+﻿<ion-view cache-view="false">
+    <ion-content class="padding has-header has-footer">
+        <div class="item item-divider" align="left">Liste Supp/Bloq ... </div>
+        <div ng-repeat="i in invitationsVerif.invitation" ng-click="annulerSuppBloq(i.id)">
+            <div class="list" style="margin:auto;" ng-repeat="p in personnes.personne |  filter:{id:i.inv_emetteurid}">
+                <a class="item item-avatar" style="border:hidden;">
+                    <img ng-src="{{p.img}}">
+                    <p>{{p.surnom}}</p>
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
