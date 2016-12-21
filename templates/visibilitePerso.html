@@ -2,52 +2,55 @@
     <ion-content class="has-header has-footer">
         <div class="list">
             <div class="row">
-                <div class="col"><a href="javascript:history.back()" class="button icon-left ion-chevron-left button-clear button-dark"></a></div>
+                <div class="col"><a ng-click="goMonprofile()" class="button icon-left ion-chevron-left button-clear button-dark"></a></div>
                 <div class="col"></div>
                 <div class="col" style="margin-top:15px;margin-left:20px;">Age</div>
                 <div class="col"></div>
                 <div class="col"></div>
             </div>
             <div>
-                <div>
-                    <div class="item range">
-                        <i>min</i>
-                        <input type="range" name="age" min="0" max="100">
-                        <i>max</i>
-                    </div>
+                <div class="item range">
+                    <i>Min</i>
+                    <input type="range" name="age" min="ageMin" max="ageMax" multiple>
+                    <i>Max</i>
                 </div>
-                <div align="center">
-                    <div class="input-label">
-                        Distance
-                    </div>
-                    <div class="item range">
-                        <i>km</i>
-                        <input type="range" value="{{recherches.distance}}" min="0" max="100">
-                        <i>km</i>
-                    </div>
-                </div>
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        Sexe
-                    </div>
-                    <select>
-                        <option selected>Femme</option>
-                        <option>Homme</option>
-                        <option>Homme et Femme</option>
-                    </select>
-                </label>
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        Type de profil
-                    </div>
-                    <select>
-                        <option selected>FFFF</option>
-                        <option>GGGG</option>
-                    </select>
-                </label>
             </div>
-            <button class="button button-block button-positive" ng-click="editRecherche()">
-                Mettre à jours
-            </button>
+            <div align="center">
+                <div class="input-label">
+                    Distance
+                </div>
+                <div class="item range">
+                    <i>Km</i>
+                    <input type="range" ng-model="visibilites.visibilite.distance" min="{{DistMin}}" max="{{DistMax}}">
+                    <i>Km</i>
+                </div>
+            </div>
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Sexe
+                </div>
+                <select>
+                    <option ng-repeat="typ in typePerso" value="{{typ.Name}}"
+                            ng-selected="{{ typ.Selected == true }}">
+                        {{typ.Name}}
+                    </option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Type de profil
+                </div>
+                <select>
+                    <option ng-repeat="typrof in typeProfil" value="{{typrof.Name}}"
+                            ng-selected="{{ typrof.Selected == true }}">
+                        {{typrof.Name}}
+                    </option>
+                </select>
+            </label>
+        </div>
+        <button class="button button-block button-positive" ng-click="editRecherche()">
+            Mettre à jours
+        </button>
     </ion-content>
 </ion-view>

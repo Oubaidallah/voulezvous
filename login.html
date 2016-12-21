@@ -1,76 +1,99 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 <head>
-
+    <meta charset="utf-8">
+    <title>OpenFB Sample</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="ratchet.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
-    <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
-    <script src="https://cdn.rawgit.com/driftyco/ng-cordova/master/dist/ng-cordova.min.js"></script>
-    <script src="https://cdn.rawgit.com/nraboy/ng-cordova-oauth/master/dist/ng-cordova-oauth.min.js"></script>
-
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="cordova_plugins.js"></script>
-    <div ng-app="facebookApp">
-        <div ng-controller="mainCtrl">
-        </div>
+    <div class="content content-padded">
+        <button class="btn btn-block" onclick="login()">Login with Facebook</button>
+        <hr />
+        <button class="btn btn-block" onclick="getInfo()">Get My Info</button>
+        <p>Name: <span id="userName"></span></p>
+        <img id="userPic" />
+        <hr />
     </div>
-    <div data-role="page" id="home">
-        <div data-role="header">
-            <h1>Login</h1>
-        </div>
-
-        <div data-role="main" class="ui-content">
-            <p>You need to login to view your Facebook profile information</p>
-            <a target="_blank" href="#" onclick="login()" style="text-decoration: none"><button>Login using Facebook</button></a>
-        </div>
-    </div>
-    <div data-role="page" id="profile">
-        <div data-role="header">
-            <a target="_blank" href="#home" class="ui-btn ui-icon-home ui-btn-icon-left">Home</a>
-            <h1>Profile</h1>
-        </div>
-        <div data-role="main" class="ui-content" id="listTable"></div>
-    </div>
+    <!--cordova.js is automatically injected by the Cordova build process-->
+    <script src="cordova.js"></script>
+    <script src="openfb.js"></script>
     <script>
-        angular.module("facebookApp", ["ionic", "ngCordova"]).controller("mainCtrl", ["$scope", "$cordovaOauth", "$http", function ($scope, $cordovaOauth, $http) {
-            window.cordovaOauth = $cordovaOauth;
-            window.http = $http;
-        }]);
-        function login() {
-            facebookLogin(window.cordovaOauth, window.http);
-        }
 
-        function facebookLogin($cordovaOauth, $http) {
-            $cordovaOauth.facebook("1851257125110835", ["email", "public_profile"], { redirect_uri: "http://localhost/callback" }).then(function (result) {
-                displayData($http, result.access_token);
-            }, function (error) {
-                alert("Error: " + error);
-            });
-        }
-        function displayData($http, access_token) {
-            $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: access_token, fields: "name,gender,location,picture", format: "json" } }).then(function (result) {
-                var name = result.data.name;
-                var gender = result.data.gender;
-                var picture = result.data.picture;
+     // Defaults to sessionStorage for storing the Facebook token
+     openFB.init({appId: '1851257125110835'});
 
-                var html = '<table id="table" data-role="table" data-mode="column" class="ui-responsive"><thead><tr><th>Field</th><th>Info</th></tr></thead><tbody>';
-                html = html + "<tr><td>" + "Name" + "</td><td>" + name + "</td></tr>";
-                html = html + "<tr><td>" + "Gender" + "</td><td>" + gender + "</td></tr>";
-                html = html + "<tr><td>" + "Picture" + "</td><td><img src='" + picture.data.url + "' /></td></tr>";
+    //  Uncomment the line below to store the Facebook token in localStorage instead of sessionStorage
+    openFB.init({appId: '1851257125110835', tokenStore: window.localStorage});
 
-                html = html + "</tbody></table>";
+    function login() {
+        openFB.login(
+                function(response) {
+                    if(response.status === 'connected') {
+                        alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);
+						getInfo();
+                    } else {
+                        alert('Facebook login failed: ' + response.error);
+                    }
+                }, {scope: 'email,read_stream,publish_actions'});
+    }
 
-                document.getElementById("listTable").innerHTML = html;
-                $.mobile.changePage($("#profile"), "slide", true, true);
-            }, function (error) {
-                alert("Error: " + error);
-            });
-        }
+    function getInfo() {
+        openFB.api({
+            path: '/me',
+            success: function(data) {
+                console.log(JSON.stringify(data));
+                document.getElementById("userName").innerHTML = data.name;
+                document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
+            },
+            error: errorHandler});
+    }
+
+    function share() {
+        openFB.api({
+            method: 'POST',
+            path: '/me/feed',
+            params: {
+                message: document.getElementById('Message').value || 'Testing Facebook APIs'
+            },
+            success: function() {
+                alert('the item was posted on Facebook');
+            },
+            error: errorHandler});
+    }
+
+    function readPermissions() {
+        openFB.api({
+            method: 'GET',
+            path: '/me/permissions',
+            success: function(result) {
+                alert(JSON.stringify(result.data));
+            },
+            error: errorHandler
+        });
+    }
+
+    function revoke() {
+        openFB.revokePermissions(
+                function() {
+                    alert('Permissions revoked');
+                },
+                errorHandler);
+    }
+
+    function logout() {
+        openFB.logout(
+                function() {
+                    alert('Logout successful');
+                },
+                errorHandler);
+    }
+
+    function errorHandler(error) {
+        alert(error.message);
+    }
+
     </script>
 </body>
-
 </html>

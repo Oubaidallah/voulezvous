@@ -93,6 +93,16 @@
             function (e) { console.log(e) }
         )
 
+    $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/visibilite?filter=id,eq,' + 1 + '?transform=1').
+        then(
+            function (r) {
+                console.log(r.data);
+                $scope.visibilites = r.data;
+
+            },
+            function (e) { console.log(e) }
+        )
+
     $scope.typePerso = [
         { Name: 'Femme', Selected: true },
         { Name: 'Homme', Selected: false },
@@ -365,20 +375,13 @@
         { Name: 'Zimbabwe', Selected: false },
     ];
 
-    /*$scope.editRecherche = function () {
+    $scope.editRecherche = function () {
     
         $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
     
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
-            { "id_user": $scope.currentUser.id, "ageMin": "20", "ageMax": "40", "sexe": $scope.sexe, "distance": $scope.r.distance, "profile": $scope.profile },
-            { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
-        $scope.goMonprofile();
-    }*/
-    $scope.editRecherche = function () {
-
-        $http.put('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/19',
-            { "surnom": "httthhh", "description": "hhhhhhhh" },
+            { "id_user": $scope.currentUser.id, "ageMin": "20", "ageMax": "40", "sexe": $scope.sexe, "distance": $scope.recherches.recherche.distance, "profile": $scope.profile },
             { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
         $scope.goMonprofile();
     }
@@ -534,6 +537,13 @@
         var myEl = angular.element(document.querySelector('#divID'));
         myEl.remove();
     }
+
+    
+    $http.get('http://voulezvous.io/api/searchFiltered/' + 1).
+                            then(
+                    function (r) { console.log(r.data); $scope.ResultFilter = r.data; },
+                    function (e) { console.log(e) }
+                )
 
     $scope.showList = function (d) {
 
@@ -1149,5 +1159,12 @@
 
 .factory('GetInvId', function () {
     return { invId: '' };
+})
+
+.filter('FilterRecherche', function () {
+    return function () {
+
+
+    }
 })
 ;

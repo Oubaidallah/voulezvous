@@ -140,7 +140,7 @@ angular.module('starter', ['ionic'])
 
     $urlRouterProvider.otherwise(function ($injector, $location) {
         var $state = $injector.get("$state");
-        $state.go("home");
+        $state.go("recherche");
     })
 
 })
