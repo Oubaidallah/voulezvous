@@ -19,7 +19,7 @@
             </div>
         </div>
         <div>{{ResultFilter}}
-            <div id="divID" class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id} ">
+            <div id="divID" class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id}" >
                 <div class="profileWrapper">
                     <div class="picHolder">
                         <div class="close-btn"><a  ng-click="showList(p.id)">X</a></div>

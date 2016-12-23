@@ -375,16 +375,16 @@
         { Name: 'Zimbabwe', Selected: false },
     ];
 
-    $scope.editRecherche = function () {
+    /*$scope.editRecherche = function () {
     
         $http.delete('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
     
         $http.post('http://bluepenlabs.com/projects/voulezvous/api.php/recherche/',
-            { "id_user": $scope.currentUser.id, "ageMin": "20", "ageMax": "40", "sexe": $scope.sexe, "distance": $scope.recherches.recherche.distance, "profile": $scope.profile },
+            { "id_user": $scope.currentUser.id, "ageMin": "20", "ageMax": "40", "sexe": $scope.sexe, "distance": $scope.r.distance, "profile": $scope.profile },
             { "Content-Type": "application/json" }).then(function (s) { }, function (e) { console.log(e); })
         $scope.goMonprofile();
-    }
+    }*/
 
 
     $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/1').
@@ -541,7 +541,9 @@
     
     $http.get('http://voulezvous.io/api/searchFiltered/' + 1).
                             then(
-                    function (r) { console.log(r.data); $scope.ResultFilter = r.data; },
+                    function (r) {
+                        console.log(r.data); $scope.ResultFilter = r.data;
+                    },
                     function (e) { console.log(e) }
                 )
 

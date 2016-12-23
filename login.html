@@ -2,24 +2,41 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>OpenFB Sample</title>
+	<title>Voulez Vous ?</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <link rel="stylesheet" href="ratchet.css">
     <link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="content content-padded">
-        <button class="btn btn-block" onclick="login()">Login with Facebook</button>
-        <hr />
-        <button class="btn btn-block" onclick="getInfo()">Get My Info</button>
-        <p>Name: <span id="userName"></span></p>
-        <img id="userPic" />
-        <hr />
-    </div>
-    <!--cordova.js is automatically injected by the Cordova build process-->
-    <script src="cordova.js"></script>
-    <script src="openfb.js"></script>
-    <script>
+	        <div class="social-login">
+			  <a onclick="login()">
+				<i class="fa fa-facebook fa-lg"></i>
+				Se connecter à Facebook
+			  </a>
+			</div>
+<!--<div class="content content-padded">
+<hr/>
+<button class="btn btn-block" onclick="getInfo()">Get My Info</button>
+<p>User id : <span id="user_id"></span></p>
+<p>User First Name : <span id="userFirstName"></span></p>
+<p>User Last  Name : <span id="userLastName"></span></p>
+<p>User  Name : <span id="userName"></span></p>
+<p>User  Gender : <span id="userGender"></span></p>
+<p>user email: <span id="userEmail"></span></p>
+<p>user birthday: <span id="userBirthday"></span></p>
+<p>user location: <span id="userLocation"></span></p>
+<img id="userPic"/>
+<hr/>
+
+</div>-->
+
+<!--cordova.js is automatically injected by the Cordova build process-->
+<script src="cordova.js"></script>
+
+<script src="js/openfb.js"></script>
+
+<script>
 
      // Defaults to sessionStorage for storing the Facebook token
      openFB.init({appId: '1851257125110835'});
@@ -32,20 +49,27 @@
                 function(response) {
                     if(response.status === 'connected') {
                         alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);
-						getInfo();
+						window.location.href = 'index.html';
                     } else {
                         alert('Facebook login failed: ' + response.error);
                     }
-                }, {scope: 'email,read_stream,publish_actions'});
+                }, {scope: 'public_profile,email,user_birthday'});
     }
 
     function getInfo() {
         openFB.api({
             path: '/me',
             success: function(data) {
-                console.log(JSON.stringify(data));
-                document.getElementById("userName").innerHTML = data.name;
-                document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
+				alert(JSON.stringify(data));
+				document.getElementById("user_id").innerHTML = data.id;
+                document.getElementById("userFirstName").innerHTML = data.first_name;
+				document.getElementById("userLastName").innerHTML = data.last_name;
+				document.getElementById("userName").innerHTML = data.name;
+				document.getElementById("userGender").innerHTML = data.gender;
+				document.getElementById("userEmail").innerHTML = data.email;
+				document.getElementById("userBirthday").innerHTML = data.user_birthday;
+				<!-- document.getElementById("userLocation").innerHTML = data.place; -->
+				document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
             },
             error: errorHandler});
     }
@@ -94,6 +118,6 @@
         alert(error.message);
     }
 
-    </script>
+</script>
 </body>
 </html>
