@@ -1,0 +1,524 @@
+{
+	"questions" : [
+		{
+			"id" : 1,
+			"question" : "Vous avez gagné 10 jours de vacances tout frais payés ! Votre choix",
+			"left" : "Grand hôtel sur une superbe plage, programme restaurant, farniente et fiesta !",
+			"right" : "Petit châlet à la montagne avec jacuzzi privé, vue panoramique et cocooning",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 2,
+			"question" : "C'est bientôt votre anniversaire, vous préférez :",
+			"left": "Une surprise party",
+			"right": "Un dîner avec vos proches",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 3,
+			"question": "Le weekend arrive, en général...",
+			"left": "Vous voulez voir un maximum de monde.",
+			"right": "Vous aimez prendre du temps pour vous.",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 4,
+			"question": "Une personne dans la pièce vous plaît :",
+			"left": "Vous essayez de lui parler",
+			"right": "Vous attendez qu'elle vous remarque",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 5,
+			"question": "Nouvelle ville, nouvelle vie :",
+			"left": "Vous avez déjà de nouveaux amis !",
+			"right": "Vos amis vous manquent...",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 6,
+			"question": "Vous avez eu une semaine bien chargée, votre ami insiste pour sortir dîner. Vous lui répondez :",
+			"left": "il me faut un endroit animé, sinon je m'endors !",
+			"right": "bon d'accord mais une ambiance calme alors !",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 7,
+			"question": "Votre soirée se termine :",
+			"left": "quoi c'est déjà fini ?",
+			"right": "Je suis content de retrouver mon lit !",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 8,
+			"question": "Votre cercle d'amis :",
+			"left": "s'agrandit continuellement",
+			"right": "est le même depuis longtemps",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 9,
+			"question": "Vous êtes témoin de mariage, vous devez faire un discours sur scène devant tous les invités :",
+			"left": "Vous avez hâte !",
+			"right": "Aïe, ça ne vous met pas du tout à l'aise !",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 10,
+			"question": "C'est la fête des voisins :",
+			"left": "Je prépare ma spécialité, on va se régaler !",
+			"right": "Une bonne série à me conseiller ?",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : true
+		},
+		{
+			"id" : 11,
+			"question": "La premiere fois que vous avez un rendez vous, vous...",
+			"left": "Prenez les devants.",
+			"right": "Vous laissez guider par la conversation.",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : false	
+		},
+		{
+			"id" : 12,
+			"question": "Dans une pièce remplie de monde, vous vous tenez...",
+			"left": "Vers le centre",
+			"right": "Près du mur",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : false
+		},
+		{
+			"id" : 13,
+			"question": "Une promenade solitaire vous inspire :",
+			"left": "L'ennui",
+			"right": "La paix",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "EI",
+			"required" : false
+		},
+		{
+			"id" : 15,
+			"question": "La meilleure qualité pour un bon détective...",
+			"left": "est d'être méticuleux et de tout analyser",
+			"right": "est d'avoir un flair d'enfer",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 16,
+			"question": "Le plus important pour vous, c'est :",
+			"left": "Le chemin",
+			"right": "La destination",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 17,
+			"question": "Qu'est-ce qui compte le plus pour vous :",
+			"left": "Le détail",
+			"right": "L'ensemble",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 18,
+			"question": "Les règles :",
+			"left": "Sont nécessaires",
+			"right": "Devraient être remises en question",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 19,
+			"question": "on a toujours fait de cette façon...,",
+			"left": "Pourquoi changer une recette qui marche ?",
+			"right": "Ne pourrait-on pas essayer autre chose ?",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 20,
+			"question": "Vous tombez sur une recette de cuisine qui vous plaît.",
+			"left": "Vous la suivez à la lettre. Pas question de rater une étape !",
+			"right": "Vous l'avez un peu modifiée, ce sera encore meilleur. ",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 21,
+			"question": "Une oeuvre d'art pourra vous toucher par :",
+			"left": "Son esthétique",
+			"right": "Son message",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 22,
+			"question": "Vous passez devant tous les jours :",
+			"left": "Vous pourriez le décrire les yeux fermés",
+			"right": "Tiens, vous n'aviez jamais fait attention à ce détail...",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 23,
+			"question": "Pour vous, le monde qui vous entoure :",
+			"left": "Est un grand ensemble où tout est lié.",
+			"right": "Est une addition de choses complètement différentes. ",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 24,
+			"question": "Lorsque vous racontez un souvenir :",
+			"left": "Vous faites revivre la scène comme si on y était : couleurs, bruits, détails...",
+			"right": "Vous restituez l'ambiance générale, les non-dits et votre interprétation",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : true
+		},
+		{
+			"id" : 25,
+			"question": "Vous devez raconter une histoire à votre petit neveu pour qu'il s'endorme :",
+			"left": "vous lui racontez l'histoire du petit chaperon Rouge",
+			"right": "vous inventez de A à Z",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : false
+		},
+		{
+			"id" : 26,
+			"question": "Une tâche manuelle répétitive nécessitant de la concentration :",
+			"left": "vous ennuie très vite",
+			"right": "vous détend",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : false
+		},
+		{
+			"id" : 27,
+			"question": "Vous vous percevez comme étant :",
+			"left": "Les pieds sur terre",
+			"right": "La tête dans les nuages",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "SN",
+			"required" : false
+		},
+		{
+			"id" : 28,
+			"question": "La charité pour vous :",
+			"left": "N'est pas la meilleure solution ",
+			"right": "Si vous pouviez, vous donneriez à tout le monde",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 29,
+			"question": "Devant la séquence émotion d'un film :",
+			"left": "Vous avez la gorge nouée malgré vous",
+			"right": "C'est de la fiction, donc cela ne vous touche pas",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 30,
+			"question": "La meilleure décision est ",
+			"left": "la plus juste",
+			"right": "celle qui satisfait le plus grand nombre",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 31,
+			"question": "Une critique objective",
+			"left": "C'est toujours un peu blessant",
+			"right": "Vous permet d'avancer",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 32,
+			"question": "Vous avez un message peu agréable à faire passer :",
+			"left": "Vous faites preuve de diplomatie",
+			"right": "Vous êtes franc et direct",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 33,
+			"question": "Vous êtes face à une injustice :",
+			"left": "Vous exprimez votre indignation",
+			"right": "Vous analysez la situation...",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 34,
+			"question": "L'erreur est humaine :",
+			"left": "Tout à fait",
+			"right": "Il y a des limites",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 35,
+			"question": "Vous vous mettez à la place des gens :",
+			"left": "Sans problème",
+			"right": "Difficilement",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 36,
+			"question": "Vous avez besoin d'un ami pour vous aider à déménager :",
+			"left": "Il me doit bien ça. Je l'ai aidé la dernière fois",
+			"right": "Je vais lui demander si gentiment qu'il ne pourra pas dire non",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 37,
+			"question": "Vous adorez ce vêtement en vitrine, il est un peu cher :",
+			"left": "J'attends les soldes !",
+			"right": "Mais il me le faut tout de suite !",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : true
+		},
+		{
+			"id" : 38,
+			"question": "Vous arrive-t-il de vous confier ?",
+			"left": "Quand vous en ressentez le besoin.",
+			"right": "C'est pas un exercice facile.",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : false
+		},
+		{
+			"id" : 39,
+			"question": "Cette personne semble vraiment perdue :",
+			"left": "Dommage qu'elle ne voie pas le plan juste à côté.",
+			"right": "Elle vous fait de la peine, vous l'aidez.",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : false
+		},
+		{
+			"id" : 40,
+			"question": "Vos choix professionnels s'orientent vers :",
+			"left": "Les conditions de travail ainsi que l'ambiance",
+			"right": "La mission et le salaire",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "FT",
+			"required" : false
+		},
+		{
+			"id" : 41,
+			"question": "Concernant vos choix de vie :",
+			"left": "Vous êtes capitaine à bord.",
+			"right": "Vous allez où le courant vous mène. ",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 42,
+			"question": "Vous partez en voyage :",
+			"left": "Tout doit être organisé",
+			"right": "Vous trouverez des informations sur place",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 43,
+			"question": "Selon vous, avoir un plan c'est :",
+			"left": "Nécessaire pour avancer.",
+			"right": "Surtout une perte de temps, ça ne se passe jamais comme on le voudrait.",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 44,
+			"question": "Quand vous pensez à l'avenir :",
+			"left": "J'ai déjà pris mes dispositions.",
+			"right": "On verra bien !",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 45,
+			"question": "Vous avez une tâche à réaliser pour lundi :",
+			"left": "Vous vous en occupez tout de suite pour pouvoir profiter du weekend. ",
+			"right": "Vous aurez largement le temps dans le weekend.",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 46,
+			"question": "Quelque chose ne se passe pas comme vous l'avez prévu :",
+			"left": "Vous êtes frustré",
+			"right": "Ce n'est pas très grave, on va faire autrement",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 47,
+			"question": "Pour vous, être en retard :",
+			"left": "C'est un manque de respect",
+			"right": "Cela vous arrive souvent",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 48,
+			"question": "Tenir un budget :",
+			"left": "C'est essentiel et rassurant",
+			"right": "C'est contraignant et stressant. ",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 49,
+			"question": "Pour vous, un environnement impeccable ou rien ne dépasse :",
+			"left": "Vous apaise",
+			"right": "Vous met mal à l'aise",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 50,
+			"question": "Vous n'aimez pas :",
+			"left": "Etre pris au dépourvu.",
+			"right": "Avoir un délai à respecter.",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : true
+		},
+		{
+			"id" : 51,
+			"question": "Le ménage chez vous c'est :",
+			"left": "Attendre que ce soit vraiment le désordre pour tout ranger",
+			"right": "Ranger au fur et à mesure",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : false
+		},
+		{
+			"id" : 52,
+			"question": "Votre train dans deux jours est annulé:",
+			"left": "Vous commencez à vous réorganiser tout de suite",
+			"right": "Vous ferez ça ce soir",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : false
+		},
+		{
+			"id" : 53,
+			"question": "Votre train dans deux jours est annulé:",
+			"left": "Vous commencez à vous réorganiser tout de suite",
+			"right": "Vous ferez ça ce soir",
+			"scoreL": 0,
+			"scoreR": 0,
+			"cat": "JP",
+			"required" : false
+		}
+	]
+}

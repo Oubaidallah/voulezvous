@@ -1,0 +1,63 @@
+body {
+	background: #f9f9f9;
+}
+.container {
+	margin-top: 2em;
+	margin-bottom: : 2em;
+	background: #fcfcfc;
+	border: 1px solid #eee;
+	border-radius: 1em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+.row {
+	margin: 2em 0;
+}
+.left-text {
+	width: calc(50% - 120px);
+	float: left;
+	text-align: right;
+}
+.answers {
+	width: 240px;
+	float: left;
+}
+.answers div {
+	margin: 0 10px;
+}
+.checkMark {
+	content: " ";
+	border-radius: 100%;
+	border: 3px solid #9b59b6;
+	float: left;
+}
+.checkMark.active,.checkMark:hover{
+	background: #9b59b6;
+	cursor: pointer;
+}
+.max {
+	width: 45px;
+	height: 45px;
+}
+.min {
+	width: 35px;
+	height: 35px;
+	margin-top: 5px !important;
+}
+.right-text {
+	width: calc(50% - 120px);
+	float: left;
+	text-align: left;
+}
+.question:nth-child(3n+2) .left-text {
+	float: right;
+	text-align: left;
+}
+.question:nth-child(3n+2) .right-text {
+	float: left;
+	text-align: right;
+}
+.question:nth-child(3n+2) .answers {
+	float: right;
+	transform: rotateY(180deg);
+}

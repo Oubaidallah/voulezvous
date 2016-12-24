@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Voulez-vous !</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/styleTest.css">
+</head>
+<body ng-app="voulezVousApp" ng-controller="voulezVousCtrl">
+	<div id="top"></div>
+	<div class="container" ng-hide="resulatReady">
+		<div class="question" ng-repeat="question in questions | startFrom:currentPage*pageSize | limitTo:pageSize">
+			<h3 class="text-center">{{ question.question }}</h3>
+			<div class="row">
+				<div class="left-text">
+					{{ question.left }}
+				</div>
+				<div class="answers" data-question="{{ question.id }}">
+					<div class="checkMark max max-left" ng-class="{'active' : question.scoreL == 1}" ng-click="setAnswer(1,'l',question)"></div>
+					<div class="checkMark min min-left" ng-class="{'active' : question.scoreL == .5}" ng-click="setAnswer(.5,'l',question)"></div>
+					<div class="checkMark min min-right" ng-class="{'active' : question.scoreR == .5}" ng-click="setAnswer(.5,'r',question)"></div>
+					<div class="checkMark max max-right" ng-class="{'active' : question.scoreR == 1}" ng-click="setAnswer(1,'r',question)"></div>
+				</div>
+				<div class="right-text">
+					{{ question.right }}
+				</div>
+			</div>
+		</div>
+		<form id="myForm" action="test.php" method="post">
+			<input type="hidden" name="personality" ng-value="personality">
+		</form>
+		<div class="col-md-4 col-md-offset-2" ng-hide="currentPage == 0 || currentPage >= questions.length/pageSize - 1" ng-click="prevPage()" ng-hide="currentPage >= questions.length/pageSize - 1">
+			<button class="btn btn-block btn-warning">Précédent</button>
+		</div>
+		<div class="col-md-4" ng-class="{'col-md-offset-4' : currentPage == 0}" ng-click="nextPage()" ng-hide="currentPage >= questions.length/pageSize - 1">
+			<button class="btn btn-block btn-warning">Suivant</button>
+		</div>
+		<div class="col-md-6 col-md-offset-3" ng-show="currentPage >= questions.length/pageSize - 1">
+			<button class="btn btn-block btn-warning" ng-class="{'disabled' : btnDisable}" ng-click="getAnswer()">{{ btnV }}</button>
+		</div>
+	</div>
+	<div class="container" ng-show="resulatReady">
+		<h1>Your personality is : {{ personality }}</h1>
+	</div>
+	<script src="js/angular.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

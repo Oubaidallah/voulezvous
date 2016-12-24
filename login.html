@@ -33,7 +33,7 @@
 
 <!--cordova.js is automatically injected by the Cordova build process-->
 <script src="cordova.js"></script>
-
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="js/openfb.js"></script>
 
 <script>
@@ -48,8 +48,40 @@
         openFB.login(
                 function(response) {
                     if(response.status === 'connected') {
-                        alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);
-						window.location.href = 'index.html';
+                        //alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);
+						openFB.api({
+						path: '/me',
+						success: function(data) {
+							//alert(JSON.stringify(data));
+							//var avatarUser = "https://graph.facebook.com/v2.8/"+data.id+"/picture?type=normal";
+							var userDataSend = { "first_name":data.first_name, "last_name":data.last_name,"providerId":data.id,
+							"avatar":"https://graph.facebook.com/v2.8/"+data.id+"/picture?type=normal","email":data.email,"gender":data.gender};
+							//alert(JSON.stringify(userDataSend));
+							$.ajax({
+								url: "http://voulezvous.io/api/logSub",
+								type: "POST",
+								data: JSON.stringify(userDataSend),
+								contentType: "application/json",
+								success: function(results) {
+								var statusUser = JSON.stringify(results["status"]);
+								if (statusUser==0){
+									window.location.href = 'test.html';
+									$.ajax({
+										url: "http://voulezvous.io/api/logSub",
+										type: "POST",
+										data: { "status": "1","availableCredits":"3"},
+										contentType: "application/json",});
+								} else {
+									window.location.href = 'index.html';
+								}
+								
+								//alert(statusUser);
+								//alert(JSON.stringify(results["availableCredits"]));
+								},
+							});
+						},
+						error: errorHandler});
+						//window.location.href = 'index.html';
                     } else {
                         alert('Facebook login failed: ' + response.error);
                     }
@@ -61,15 +93,22 @@
             path: '/me',
             success: function(data) {
 				alert(JSON.stringify(data));
-				document.getElementById("user_id").innerHTML = data.id;
-                document.getElementById("userFirstName").innerHTML = data.first_name;
-				document.getElementById("userLastName").innerHTML = data.last_name;
-				document.getElementById("userName").innerHTML = data.name;
-				document.getElementById("userGender").innerHTML = data.gender;
-				document.getElementById("userEmail").innerHTML = data.email;
-				document.getElementById("userBirthday").innerHTML = data.user_birthday;
+				$.ajax({
+					url: "http://voulezvous.io/api/logSub",
+					type: "POST",
+					data: JSON.stringify(data),
+					contentType: "application/json",
+					complete: callback
+				});
+				<!-- document.getElementById("user_id").innerHTML = data.id; -->
+                <!-- document.getElementById("userFirstName").innerHTML = data.first_name; -->
+				<!-- document.getElementById("userLastName").innerHTML = data.last_name; -->
+				<!-- document.getElementById("userName").innerHTML = data.name; -->
+				<!-- document.getElementById("userGender").innerHTML = data.gender; -->
+				<!-- document.getElementById("userEmail").innerHTML = data.email; -->
+				<!-- document.getElementById("userBirthday").innerHTML = data.user_birthday; -->
 				<!-- document.getElementById("userLocation").innerHTML = data.place; -->
-				document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
+				<!-- document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small'; -->
             },
             error: errorHandler});
     }
