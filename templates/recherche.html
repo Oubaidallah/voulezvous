@@ -18,7 +18,7 @@
                 </label>
             </div>
         </div>
-        <div>{{ResultFilter}}
+        <div>
             <div id="divID" class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id}" >
                 <div class="profileWrapper">
                     <div class="picHolder">

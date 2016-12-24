@@ -2,7 +2,7 @@
 .factory('UserService', ['$http', function ($http) {
     var userId = 1;
     function getCurrentUser() {
-        return $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne/' + userId ).
+        return $http.get('http://voulezvous.io/apiCRUD.php/personne/' + userId).
         then(
             function (r) { return r; },
             function (e) { }
@@ -10,7 +10,7 @@
         $window.location.reload();
     }
     function getAllUser() {
-        return $http.get('http://bluepenlabs.com/projects/voulezvous/mobile/api.php/personne?transform=1').
+        return $http.get('http://voulezvous.io/apiCRUD.php/personne?transform=1').
         then(
             function (r) { return r; },
             function (e) { }
