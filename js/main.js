@@ -1,6 +1,7 @@
 var app = angular.module('voulezVousApp', []);
 
 app.controller('voulezVousCtrl', function($scope,$http,$location,$anchorScroll,$timeout){
+	var currentUser = localStorage.getItem('currentUserId');
     $scope.btnDisable = false;
     $scope.E = 0;
     $scope.I = 0;
@@ -189,6 +190,7 @@ app.controller('voulezVousCtrl', function($scope,$http,$location,$anchorScroll,$
             $scope.personality += "P";
         }
 		alert($scope.personality);
+		alert(currentUser);
 		window.location.href = 'index.html';
         //$timeout(function () { document.getElementById('myForm').submit(); } , 1000);
         } 

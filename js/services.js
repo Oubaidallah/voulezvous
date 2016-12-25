@@ -1,5 +1,6 @@
 ﻿angular.module('starter')
 .factory('UserService', ['$http', function ($http) {
+    var currentUser = localStorage.getItem('currentUserId');
     var userId = 1;
     function getCurrentUser() {
         return $http.get('http://voulezvous.io/apiCRUD.php/personne/' + userId).
