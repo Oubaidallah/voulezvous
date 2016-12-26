@@ -19,12 +19,12 @@
             </div>
         </div>
         <div>
-            <div id="divID" class="card" ng-repeat="p in personnes.personne | filter:search |  filter:{id:'!'+currentUser.id}" >
+            <div id="divID" class="card" ng-repeat="p in personnes.users | filter:search |  filter:{id:'!'+currentUser.id}" >
                 <div class="profileWrapper">
                     <div class="picHolder">
                         <div class="close-btn"><a  ng-click="showList(p.id)">X</a></div>
-                        <img ng-src="{{p.img}}" ng-click="goInvitDetails(p.id)">
-                        {{p.surnom}}, {{p.age}}
+                        <img ng-src="{{p.imagePath}}" ng-click="goInvitDetails(p.id)">
+                        {{p.firstName}}
                     </div>
                 </div> 
                 <div class="options spaceIt">

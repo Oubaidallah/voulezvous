@@ -6,7 +6,7 @@
             <img src="img/pic6.jpg">
             <div class="profileInfo">
                 <div class="container-fluid">
-                    <div class="col-xs-8">{{personne.surnom}} , {{personne.age}}</div>
+                    <div class="col-xs-8">{{personne.firstName}} {{personne.lastName}}</div>
                     <div class="col-xs-4 text-right">({{personne.profile}})</div>
                 </div>
             </div>
@@ -19,9 +19,9 @@
         </div>
         <div class="container-fluid">
             <div class="col-xs-8">
-                <p>Fumeur : {{personne.fumeur}}</p>
-                <p>Alcool : {{personne.alcool}} </p>
-                <p>Enfants : {{personne.enfants}}</p>
+                <p>Fumeur : {{personne.isSmoker}}</p>
+                <p>Alcool : {{personne.isDrinker}} </p>
+                <p>Enfants : {{personne.hasKids}}</p>
             </div>
             <div class="col-xs-4 personaltyIcon">
                 <img src="img/icon.png">

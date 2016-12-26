@@ -62,7 +62,7 @@
 })
 
 .controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate, UserService, $ionicPopup) {
-
+    var currentUserLS = localStorage.getItem('currentUserId');
     $scope.DistMin = 0;
     $scope.DistMax = 150;
 
@@ -78,12 +78,22 @@
     };
 
     UserService.getCurrentUser().then(
-            function (r) { console.log(r.data); $scope.currentUser = r.data; },
+            function (r) {
+                console.log(r.data); $scope.currentUser = r.data;
+                var birthday = $scope.currentUser.birthDate;
+                $scope.calculateAge = function calculateAge(birthday) { // birthday is a date
+                    var ageDifMs = Date.now() - birthday.getTime();
+                    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                    return Math.abs(ageDate.getUTCFullYear() - 1970);
+                }
+            },
             function (e) { console.log(e) }
         )
 
+    
+   
 
-    $http.get('http://voulezvous.io/apiCRUD.php/recherche?filter=id,eq,' + 1 + '?transform=1').
+    $http.get('http://voulezvous.io/apiCRUD.php/recherche?filter=id_user,eq,' + currentUserLS + '?transform=1').
         then(
             function (r) {
                 console.log(r.data);
@@ -93,7 +103,7 @@
             function (e) { console.log(e) }
         )
 
-    $http.get('http://voulezvous.io/apiCRUD.php/visibilite?filter=id,eq,' + 1 + '?transform=1').
+    $http.get('http://voulezvous.io/apiCRUD.php/visibilite?filter=id_user,eq,' + currentUserLS + '?transform=1').
         then(
             function (r) {
                 console.log(r.data);
@@ -387,7 +397,7 @@
     }*/
 
 
-    $http.get('http://voulezvous.io/apiCRUD.php/personne/1').
+    $http.get('http://voulezvous.io/apiCRUD.php/users/' + currentUserLS).
         then(
             function (r) { console.log(r.data); $scope.personne = r.data; },
             function (e) { console.log(e) }
@@ -395,31 +405,35 @@
 
     $scope.editProfilee = function () {
 
-        $http.delete('http://voulezvous.io/apiCRUD.php/personne/' + $scope.currentUser.id,
+        $http.delete('http://voulezvous.io/apiCRUD.php/users/' + currentUserLS,
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
-        $http.post('http://voulezvous.io/apiCRUD.php/personne/',
+        $http.post('http://voulezvous.io/apiCRUD.php/users/',
             {
                 "id": $scope.currentUser.id,
-                "id_fb": $scope.currentUser.id_fb,
-                "nom": $scope.currentUser.nom,
-                "prenom": $scope.currentUser.prenom,
-                "surnom": $scope.personne.surnom,
-                "age": $scope.currentUser.age,
-                "adresse": $scope.currentUser.adresse,
-                "description": $scope.currentUser.description,
-                "profile": $scope.currentUser.profile,
-                "datenaissance": $scope.currentUser.datenaissance,
-                "recherche": $scope.currentUser.recherche,
-                "fumeur": $scope.currentUser.fumeur,
-                "alcool": $scope.currentUser.alcool,
-                "enfants": $scope.currentUser.enfants,
-                "nb_amis": $scope.currentUser.nb_amis,
-                "nbr_credit": $scope.currentUser.nbr_credit,
-                "img": $scope.currentUser.img
+                "firstName": $scope.currentUser.firstName,
+                "lastName": $scope.currentUser.lastName,
+                "email": $scope.currentUser.email,
+                "address": $scope.currentUser.address,
+                "country": $scope.currentUser.country,
+                "imagePath": $scope.currentUser.imagePath,
+                "gender": $scope.personne.gender,
+                "status": $scope.currentUser.status,
+                "birthDate": $scope.currentUser.birthDate,
+                "provider": $scope.currentUser.provider,
+                "providerId": $scope.currentUser.providerId,
+                "availableCredits": $scope.currentUser.availableCredits,
+                "currentList": $scope.currentUser.currentList,
+                "filterActive": $scope.currentUser.filterActive,
+                "isSmoker": $scope.currentUser.isSmoker,
+                "isDrinker": $scope.currentUser.isDrinker,
+                "hasKids": $scope.currentUser.hasKids,
+                "remember_token": $scope.currentUser.remember_token,
+                "created_at": $scope.currentUser.created_at,
+                "updated_at": $scope.currentUser.updated_at
             },
             { "Content-Type": "application/json" }).then(function (s) {
-                $http.get('http://voulezvous.io/apiCRUD.php/personne/' + UserService.getCurrentUser.id + '?transform=1').
+                $http.get('http://voulezvous.io/apiCRUD.php/users/' + currentUserLS + '?transform=1').
                             then(
                     function (r) { console.log(r.data); $scope.invitations = r.data;  },
                     function (e) { console.log(e) }
@@ -432,7 +446,7 @@
 })
 
 .controller('MsgCtrl', function ($scope, $http, UserService, $state, GetUserId, GetInvId, $ionicPopup, FriendsService, $ionicActionSheet, $timeout,$ionicScrollDelegate) {
-
+    var currentUserLS = localStorage.getItem('currentUserId');
     $scope.scrollDown = function () {
         $ionicScrollDelegate.scrollBottom();
     };
@@ -459,7 +473,7 @@
 
         confirmPopup.then(function (res) {
             if (res) {
-                $http.delete('http://voulezvous.io/apiCRUD.php/invitation/' + idInvi,
+                $http.delete('http://voulezvous.io/apiCRUD.php/users/' + idInvi,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
                 window.location.reload(true);
                 console.log('Oui');
@@ -606,28 +620,32 @@
                         )
                     }, function (e) { console.log(e); })
 
-                $http.delete('http://voulezvous.io/apiCRUD.php/personne/' + $scope.currentUser.id,
+                $http.delete('http://voulezvous.io/apiCRUD.php/users/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
-                $http.post('http://voulezvous.io/apiCRUD.php/personne/',
+                $http.post('http://voulezvous.io/apiCRUD.php/users/',
                     {
                         "id": $scope.currentUser.id,
-                        "id_fb": $scope.currentUser.id_fb,
-                        "nom": $scope.currentUser.nom,
-                        "prenom": $scope.currentUser.prenom,
-                        "surnom": $scope.currentUser.surnom,
-                        "age": $scope.currentUser.age,
-                        "adresse": $scope.currentUser.adresse,
-                        "description": $scope.currentUser.description,
-                        "profile": $scope.currentUser.profile,
-                        "datenaissance": $scope.currentUser.datenaissance,
-                        "recherche": $scope.currentUser.recherche,
-                        "fumeur": $scope.currentUser.fumeur,
-                        "alcool": $scope.currentUser.alcool,
-                        "enfants": $scope.currentUser.enfants,
-                        "nb_amis": parseInt($scope.currentUser.nb_amis) - parseInt(1),
-                        "nbr_credit": $scope.currentUser.nbr_credit,
-                        "img": $scope.currentUser.img
+                        "firstName": $scope.currentUser.firstName,
+                        "lastName": $scope.currentUser.lastName,
+                        "email": $scope.currentUser.email,
+                        "address": $scope.currentUser.address,
+                        "country": $scope.currentUser.country,
+                        "imagePath": $scope.currentUser.imagePath,
+                        "gender": $scope.personne.gender,
+                        "status": $scope.currentUser.status,
+                        "birthDate": $scope.currentUser.birthDate,
+                        "provider": $scope.currentUser.provider,
+                        "providerId": $scope.currentUser.providerId,
+                        "availableCredits": $scope.currentUser.availableCredits,
+                        "currentList": $scope.currentUser.currentList,
+                        "filterActive": $scope.currentUser.filterActive,
+                        "isSmoker": $scope.currentUser.isSmoker,
+                        "isDrinker": $scope.currentUser.isDrinker,
+                        "hasKids": $scope.currentUser.hasKids,
+                        "remember_token": $scope.currentUser.remember_token,
+                        "created_at": $scope.currentUser.created_at,
+                        "updated_at": $scope.currentUser.updated_at
                     },
                     { "Content-Type": "application/json" }).then(function (s) {
                         UserService.getCurrentUser();
@@ -655,29 +673,33 @@
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
                 $scope.AcceptInvi();
                 // ajouter +1 dans la table personne.nbr_amis
-                $http.delete('http://voulezvous.io/apiCRUD.php/personne/' + $scope.currentUser.id,
+                $http.delete('http://voulezvous.io/apiCRUD.php/users/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
                 UserService.getCurrentUser();
                 window.location.reload(true);
-                $http.post('http://voulezvous.io/apiCRUD.php/personne/',
+                $http.post('http://voulezvous.io/apiCRUD.php/users/',
                     {
                         "id": $scope.currentUser.id,
-                        "id_fb": $scope.currentUser.id_fb,
-                        "nom": $scope.currentUser.nom,
-                        "prenom": $scope.currentUser.prenom,
-                        "surnom": $scope.currentUser.surnom,
-                        "age": $scope.currentUser.age,
-                        "adresse": $scope.currentUser.adresse,
-                        "description": $scope.currentUser.description,
-                        "profile": $scope.currentUser.profile,
-                        "datenaissance": $scope.currentUser.datenaissance,
-                        "recherche": $scope.currentUser.recherche,
-                        "fumeur": $scope.currentUser.fumeur,
-                        "alcool": $scope.currentUser.alcool,
-                        "enfants": $scope.currentUser.enfants,
-                        "nb_amis": parseInt($scope.currentUser.nb_amis) + parseInt(1),
-                        "nbr_credit": $scope.currentUser.nbr_credit,
-                        "img": $scope.currentUser.img
+                        "firstName": $scope.currentUser.firstName,
+                        "lastName": $scope.currentUser.lastName,
+                        "email": $scope.currentUser.email,
+                        "address": $scope.currentUser.address,
+                        "country": $scope.currentUser.country,
+                        "imagePath": $scope.currentUser.imagePath,
+                        "gender": $scope.personne.gender,
+                        "status": $scope.currentUser.status,
+                        "birthDate": $scope.currentUser.birthDate,
+                        "provider": $scope.currentUser.provider,
+                        "providerId": $scope.currentUser.providerId,
+                        "availableCredits": $scope.currentUser.availableCredits,
+                        "currentList": $scope.currentUser.currentList,
+                        "filterActive": $scope.currentUser.filterActive,
+                        "isSmoker": $scope.currentUser.isSmoker,
+                        "isDrinker": $scope.currentUser.isDrinker,
+                        "hasKids": $scope.currentUser.hasKids,
+                        "remember_token": $scope.currentUser.remember_token,
+                        "created_at": $scope.currentUser.created_at,
+                        "updated_at": $scope.currentUser.updated_at
                     },
                     { "Content-Type": "application/json" }).then(function (s) {
                         UserService.getCurrentUser();
@@ -813,7 +835,7 @@
     }
 
     $scope.getProfile = function (prof_id) {
-        $http.get('http://voulezvous.io/apiCRUD.php/personne/' + prof_id).
+        $http.get('http://voulezvous.io/apiCRUD.php/users/' + prof_id).
         then(
             function (r) { console.log(r.data); $scope.personnes = r.data; alert(personnes); },
             function (e) { console.log(e) }
@@ -887,7 +909,7 @@
 })
 
 .controller('HomeCtrl', function ($scope, $http) {
-    $http.get('http://voulezvous.io/apiCRUD.php/personne/').
+    $http.get('http://voulezvous.io/apiCRUD.php/users/').
         then(
             function (r) { console.log(r.data); $scope.personnes = r.data; },
             function (e) { console.log(e) }
@@ -1015,7 +1037,7 @@
             function (e) { console.log(e) }
         )
 
-    $http.get('http://voulezvous.io/apiCRUD.php/personne/' + GetUserId.userId).
+    $http.get('http://voulezvous.io/apiCRUD.php/users/' + GetUserId.userId).
         then(
             function (r) { console.log(r.data); $scope.personne = r.data; },
             function (e) { console.log(e) }
@@ -1048,7 +1070,7 @@
             cancelText: 'Annuler'
         }).then(function (res) {
             if (res) {
-                $scope.GetnbrCredit = parseInt($scope.currentUser.nbr_credit);
+                $scope.GetnbrCredit = parseInt($scope.currentUser.availableCredits);
                 if ($scope.GetnbrCredit <= 0) {
                     $scope.showAlertCredit();
                 } else {
@@ -1057,30 +1079,34 @@
                      { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
                      { "Content-Type": "application/json" }).then(function (s) { $scope.goRecherche(); }, function (e) { console.log(e); })
 
-                    $http.delete('http://voulezvous.io/apiCRUD.php/personne/' + $scope.currentUser.id,
+                    $http.delete('http://voulezvous.io/apiCRUD.php/users/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
                 UserService.getCurrentUser();
                 window.location.reload(true);
-                    $http.post('http://voulezvous.io/apiCRUD.php/personne/',
+                    $http.post('http://voulezvous.io/apiCRUD.php/users/',
                     {
                         "id": $scope.currentUser.id,
-                        "id_fb": $scope.currentUser.id_fb,
-                        "nom": $scope.currentUser.nom,
-                        "prenom": $scope.currentUser.prenom,
-                        "surnom": $scope.currentUser.surnom,
-                        "age": $scope.currentUser.age,
-                        "adresse": $scope.currentUser.adresse,
-                        "description": $scope.currentUser.description,
-                        "profile": $scope.currentUser.profile,
-                        "datenaissance": $scope.currentUser.datenaissance,
-                        "recherche": $scope.currentUser.recherche,
-                        "fumeur": $scope.currentUser.fumeur,
-                        "alcool": $scope.currentUser.alcool,
-                        "enfants": $scope.currentUser.enfants,
-                        "nb_amis": $scope.currentUser.nb_amis,
-                        "nbr_credit": parseInt($scope.currentUser.nbr_credit) - parseInt(1),
-                        "img": $scope.currentUser.img
+                        "firstName": $scope.currentUser.firstName,
+                        "lastName": $scope.currentUser.lastName,
+                        "email": $scope.currentUser.email,
+                        "address": $scope.currentUser.address,
+                        "country": $scope.currentUser.country,
+                        "imagePath": $scope.currentUser.imagePath,
+                        "gender": $scope.personne.gender,
+                        "status": $scope.currentUser.status,
+                        "birthDate": $scope.currentUser.birthDate,
+                        "provider": $scope.currentUser.provider,
+                        "providerId": $scope.currentUser.providerId,
+                        "availableCredits": $scope.currentUser.availableCredits,
+                        "currentList": $scope.currentUser.currentList,
+                        "filterActive": $scope.currentUser.filterActive,
+                        "isSmoker": $scope.currentUser.isSmoker,
+                        "isDrinker": $scope.currentUser.isDrinker,
+                        "hasKids": $scope.currentUser.hasKids,
+                        "remember_token": $scope.currentUser.remember_token,
+                        "created_at": $scope.currentUser.created_at,
+                        "updated_at": $scope.currentUser.updated_at
                     },
                     { "Content-Type": "application/json" }).then(function (s) {
                         UserService.getCurrentUser();
@@ -1106,7 +1132,7 @@
             cancelText: 'Annuler'
         }).then(function (res) {
             if (res) {
-                $scope.GetnbrCredit = parseInt($scope.currentUser.nbr_credit);
+                $scope.GetnbrCredit = parseInt($scope.currentUser.availableCredits);
                 if ($scope.GetnbrCredit <= 0) {
                     $scope.showAlertCredit();
                 } else {
@@ -1115,30 +1141,34 @@
                          { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
                          { "Content-Type": "application/json" }).then(function (s) { $scope.goRecherche(); }, function (e) { console.log(e); })
 
-                    $http.delete('http://voulezvous.io/apiCRUD.php/personne/' + $scope.currentUser.id,
+                    $http.delete('http://voulezvous.io/apiCRUD.php/users/' + $scope.currentUser.id,
                     { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
                     UserService.getCurrentUser();
                     window.location.reload(true);
-                    $http.post('http://voulezvous.io/apiCRUD.php/personne/',
+                    $http.post('http://voulezvous.io/apiCRUD.php/users/',
                         {
                             "id": $scope.currentUser.id,
-                            "id_fb": $scope.currentUser.id_fb,
-                            "nom": $scope.currentUser.nom,
-                            "prenom": $scope.currentUser.prenom,
-                            "surnom": $scope.currentUser.surnom,
-                            "age": $scope.currentUser.age,
-                            "adresse": $scope.currentUser.adresse,
-                            "description": $scope.currentUser.description,
-                            "profile": $scope.currentUser.profile,
-                            "datenaissance": $scope.currentUser.datenaissance,
-                            "recherche": $scope.currentUser.recherche,
-                            "fumeur": $scope.currentUser.fumeur,
-                            "alcool": $scope.currentUser.alcool,
-                            "enfants": $scope.currentUser.enfants,
-                            "nb_amis": $scope.currentUser.nb_amis,
-                            "nbr_credit": parseInt($scope.currentUser.nbr_credit) - parseInt(1),
-                            "img": $scope.currentUser.img
+                            "firstName": $scope.currentUser.firstName,
+                            "lastName": $scope.currentUser.lastName,
+                            "email": $scope.currentUser.email,
+                            "address": $scope.currentUser.address,
+                            "country": $scope.currentUser.country,
+                            "imagePath": $scope.currentUser.imagePath,
+                            "gender": $scope.personne.gender,
+                            "status": $scope.currentUser.status,
+                            "birthDate": $scope.currentUser.birthDate,
+                            "provider": $scope.currentUser.provider,
+                            "providerId": $scope.currentUser.providerId,
+                            "availableCredits": $scope.currentUser.availableCredits,
+                            "currentList": $scope.currentUser.currentList,
+                            "filterActive": $scope.currentUser.filterActive,
+                            "isSmoker": $scope.currentUser.isSmoker,
+                            "isDrinker": $scope.currentUser.isDrinker,
+                            "hasKids": $scope.currentUser.hasKids,
+                            "remember_token": $scope.currentUser.remember_token,
+                            "created_at": $scope.currentUser.created_at,
+                            "updated_at": $scope.currentUser.updated_at
                         },
                         { "Content-Type": "application/json" }).then(function (s) {
                             UserService.getCurrentUser();

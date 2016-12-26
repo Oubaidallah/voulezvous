@@ -2,11 +2,11 @@
     <ion-content class="has-header has-footer">
         <div class="list">
             <div class="item item-divider" align="left">Je veux quitter le site avec ... </div>
-            <div class="list card" ng-repeat="a in personnes.personne">
+            <div class="list card" ng-repeat="a in personnes.users">
                 <a class="item item-avatar">
                     <h2>{{a.id}}</h2>
-                    <h2>{{a.nom}}</h2>
-                    <p>{{a.prenom}}</p>
+                    <h2>{{a.lastName}}</h2>
+                    <p>{{a.firstName}}</p>
                 </a>
             </div>
         </div>
