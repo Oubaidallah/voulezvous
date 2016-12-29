@@ -1,6 +1,7 @@
 ﻿angular.module('starter') // ligne hethi bch on a recupéré le module avec son nom
 .controller('AppCtrl', function ($scope, $state) {
     $scope.goHome = function () { $state.go("home"); }
+    $scope.goTest = function () { $state.go("test"); }
     $scope.goMonprofile = function () { $state.go("monprofile"); }
     $scope.goMonProfilee = function () { $state.go("monProfilee"); }
     $scope.goEditProfile = function () { $state.go("editProfile"); }
@@ -59,6 +60,39 @@
             // Custom functionality....
         });
     };
+
+    $scope.showProfilePasserTest = function () {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'VoulezVous passez le test pour accéder à votre profile ?',
+            cancelText: 'Non',
+            okText: 'Oui',
+        });
+
+        confirmPopup.then(function (res) {
+            if (res) {
+                window.location.href = 'test.html';
+            } else {
+                console.log('Non');
+            }
+        });
+    };
+
+    $scope.showMessagePasserTest = function () {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'VoulezVous passez le test pour parler avec vos amis ?',
+            cancelText: 'Non',
+            okText: 'Oui',
+        });
+
+        confirmPopup.then(function (res) {
+            if (res) {
+                window.location.href = 'test.html';
+            } else {
+                console.log('Non');
+            }
+        });
+    };
+
 })
 
 .controller('MyprofCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicScrollDelegate, UserService, $ionicPopup) {
@@ -90,7 +124,15 @@
             function (e) { console.log(e) }
         )
 
-    
+    $http.get('http://voulezvous.io/api/getProfile/' + 28  ).
+        then(
+            function (r) {
+                console.log(r.data);
+                $scope.personnesProfile = r.data;
+                $scope.resProfile = Object.values($scope.personnesProfile);
+            },
+            function (e) { console.log(e) }
+        )
    
 
     $http.get('http://voulezvous.io/apiCRUD.php/recherche?filter=id_user,eq,' + currentUserLS + '?transform=1').
@@ -117,6 +159,34 @@
         { Name: 'Femme', Selected: true },
         { Name: 'Homme', Selected: false },
         { Name: 'Homme et Femme', Selected: false }
+    ];
+
+    $scope.typeManger = [
+       { Name: 'Africain', Selected: true },
+       { Name: 'Arabe', Selected: false },
+       { Name: 'Bio', Selected: true },
+       { Name: 'Chinois', Selected: false },
+       { Name: 'Espagnol', Selected: true },
+       { Name: 'Fast Food', Selected: false },
+       { Name: 'Français', Selected: true },
+       { Name: 'Indien', Selected: false },
+       { Name: 'Italien', Selected: true },
+       { Name: 'Japonais', Selected: false },
+       { Name: 'Libanais', Selected: true },
+       { Name: 'Thailandian', Selected: false },
+       { Name: 'Turc', Selected: false },
+       { Name: 'Vegetarian', Selected: true }
+    ];
+
+    $scope.typeGater = [
+       { Name: 'Déco', Selected: true },
+       { Name: 'Beauté bien etre', Selected: false },
+       { Name: 'Gadget et Technologie', Selected: false },
+       { Name: 'Boir et manger', Selected: false },
+       { Name: 'Bijoux et accessoire', Selected: false },
+       { Name: 'Loisir', Selected: false },
+       { Name: 'Soirée et voyage', Selected: false },
+       { Name: 'Vêtement et textile', Selected: false }
     ];
 
     $scope.typeProfil = [
@@ -408,7 +478,7 @@
         $http.delete('http://voulezvous.io/apiCRUD.php/users/' + currentUserLS,
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
-        $http.post('http://voulezvous.io/apiCRUD.php/users/',
+        $http.post('http://voulezvous.io/apiCRUD.php/users',
             {
                 "id": $scope.currentUser.id,
                 "firstName": $scope.currentUser.firstName,
@@ -531,7 +601,7 @@
                 $http.delete('http://voulezvous.io/apiCRUD.php/invitation/' + GetInvId.invId,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
-                $http.post('http://voulezvous.io/apiCRUD.php/invitation/',
+                $http.post('http://voulezvous.io/apiCRUD.php/invitation',
                     { "envoyer": "0", "bloquer": "1", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": item },
                     { "Content-Type": "application/json" }).then(function (s) {
                         $http.get('http://voulezvous.io/apiCRUD.php/invitation?transform=1').
@@ -549,14 +619,20 @@
     
     $scope.removeRecherche = function (item) {
         var myEl = angular.element(document.querySelector('#divID'));
+        console.log(myEl);
         myEl.remove();
     }
 
     
-    $http.get('http://voulezvous.io/api/searchFiltered/' + 1).
+    $http.get('http://voulezvous.io/api/searchFiltered/' + 28).
                             then(
                     function (r) {
-                        console.log(r.data); $scope.ResultFilter = r.data;
+                        console.log(r.data);
+                        $scope.Resultat = r.data;
+                        $scope.res = Object.values($scope.Resultat);
+                        //$scope.myobject = [];
+                        //$.each(r.data, function (key, value) { $scope.myobject.push(value); });
+                        //console.log(res);
                     },
                     function (e) { console.log(e) }
                 )
@@ -610,7 +686,7 @@
                 $http.delete('http://voulezvous.io/apiCRUD.php/invitation/' + GetInvId.invId,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
-                $http.post('http://voulezvous.io/apiCRUD.php/invitation/',
+                $http.post('http://voulezvous.io/apiCRUD.php/invitation',
                     { "envoyer": "0", "bloquer": "0", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": item },
                     { "Content-Type": "application/json" }).then(function (s) {
                         $http.get('http://voulezvous.io/apiCRUD.php/invitation?transform=1').
@@ -623,7 +699,7 @@
                 $http.delete('http://voulezvous.io/apiCRUD.php/users/' + $scope.currentUser.id,
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
-                $http.post('http://voulezvous.io/apiCRUD.php/users/',
+                $http.post('http://voulezvous.io/apiCRUD.php/users',
                     {
                         "id": $scope.currentUser.id,
                         "firstName": $scope.currentUser.firstName,
@@ -677,7 +753,7 @@
                 { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
                 UserService.getCurrentUser();
                 window.location.reload(true);
-                $http.post('http://voulezvous.io/apiCRUD.php/users/',
+                $http.post('http://voulezvous.io/apiCRUD.php/users',
                     {
                         "id": $scope.currentUser.id,
                         "firstName": $scope.currentUser.firstName,
@@ -699,7 +775,8 @@
                         "hasKids": $scope.currentUser.hasKids,
                         "remember_token": $scope.currentUser.remember_token,
                         "created_at": $scope.currentUser.created_at,
-                        "updated_at": $scope.currentUser.updated_at
+                        "updated_at": $scope.currentUser.updated_at,
+                        "nbFriends": parseInt($scope.currentUser.nbFriends) + parseInt(1),
                     },
                     { "Content-Type": "application/json" }).then(function (s) {
                         UserService.getCurrentUser();
@@ -807,7 +884,7 @@
         UserService.getCurrentUser().then(
             function (r) {
                 console.log(r.data); $scope.currentUser = r.data;
-                if ($scope.currentUser.nb_amis > 5) {
+                if ($scope.currentUser.nbFriends > 5) {
                     //alert('Vous avez plus que 5 amis');
                     $scope.goDiscussionBloquer();
                     $scope.showAlertAmisLimite();
@@ -821,7 +898,7 @@
 
     $scope.addMessage = function () {
         $scope.getDatetime = new Date();
-        $http.post('http://voulezvous.io/apiCRUD.php/message/',
+        $http.post('http://voulezvous.io/apiCRUD.php/message',
             { "msg_emetteurid": $scope.currentUser.id, "msg_recepteurid": GetUserId.userId, "message": $scope.mmessage, "msg_timedatedenvoi": $scope.getDatetime },
             { "Content-Type": "application/json" }).then(function (s) {
                 $scope.mmessage = null;
@@ -852,7 +929,7 @@
 
     $scope.AcceptInvi = function () {
 
-        $http.post('http://voulezvous.io/apiCRUD.php/invitation/',
+        $http.post('http://voulezvous.io/apiCRUD.php/invitation',
             { "envoyer": "0", "bloquer": "0", "accepter": "1", "supprimer": "0", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
             { "Content-Type": "application/json" }).then(function (s) {
                 $http.get('http://voulezvous.io/apiCRUD.php/invitation?transform=1').
@@ -868,7 +945,7 @@
         $http.delete('http://voulezvous.io/apiCRUD.php/invitation/' + GetInvId.invId,
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
         $state.go("home");
-        $http.post('http://voulezvous.io/apiCRUD.php/invitation/',
+        $http.post('http://voulezvous.io/apiCRUD.php/invitation',
             { "envoyer": "0", "bloquer": "0", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
             { "Content-Type": "application/json" }).then(function (s) {
                 $http.get('http://voulezvous.io/apiCRUD.php/invitation?transform=1').
@@ -886,7 +963,7 @@
         $http.delete('http://voulezvous.io/apiCRUD.php/invitation/' + GetInvId.invId,
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
         $scope.goRecherche();
-        $http.post('http://voulezvous.io/apiCRUD.php/invitation/',
+        $http.post('http://voulezvous.io/apiCRUD.php/invitation',
             { "envoyer": "0", "bloquer": "0", "accepter": "0", "supprimer": "1", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id },
             { "Content-Type": "application/json" }).then(function (s) {
                 $http.get('http://voulezvous.io/apiCRUD.php/invitation?transform=1').
@@ -1013,7 +1090,7 @@
         $http.delete('http://voulezvous.io/apiCRUD.php/invitation/' + GetInvId.invId,
         { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
-        $http.post('http://voulezvous.io/apiCRUD.php/invitation/',
+        $http.post('http://voulezvous.io/apiCRUD.php/invitation',
             { "envoyer": "0", "bloquer": "1", "accepter": "0", "supprimer": "1", "inv_recepteurid": $scope.currentUser.id, "inv_emetteurid": GetUserId.userId },
             { "Content-Type": "application/json" }).then(function (s) {
                 $http.get('http://voulezvous.io/apiCRUD.php/invitation?transform=1').
@@ -1075,16 +1152,16 @@
                     $scope.showAlertCredit();
                 } else {
                 console.log('Your input is ', res);
-                    $http.post('http://voulezvous.io/apiCRUD.php/invitation/',
+                    $http.post('http://voulezvous.io/apiCRUD.php/invitation',
                      { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
                      { "Content-Type": "application/json" }).then(function (s) { $scope.goRecherche(); }, function (e) { console.log(e); })
 
                     $http.delete('http://voulezvous.io/apiCRUD.php/users/' + $scope.currentUser.id,
-                { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
+                     { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
 
                 UserService.getCurrentUser();
                 window.location.reload(true);
-                    $http.post('http://voulezvous.io/apiCRUD.php/users/',
+                    $http.post('http://voulezvous.io/apiCRUD.php/users',
                     {
                         "id": $scope.currentUser.id,
                         "firstName": $scope.currentUser.firstName,
@@ -1124,7 +1201,7 @@
 
     }
 
-    $scope.sendInviRech = function () {
+    $scope.sendInviRech = function (getUserOtherId) {
 
         var promptPopup = $ionicPopup.prompt({
             title: 'Voulez Vous ?',
@@ -1137,8 +1214,8 @@
                     $scope.showAlertCredit();
                 } else {
                     console.log('Your input is ', res);
-                    $http.post('http://voulezvous.io/apiCRUD.php/invitation/',
-                         { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": GetUserId.userId, "inv_emetteurid": $scope.currentUser.id, "message": res },
+                    $http.post('http://voulezvous.io/apiCRUD.php/invitation',
+                         { "envoyer": "1", "bloquer": "0", "accepter": "0", "supprimer": "0", "inv_recepteurid": getUserOtherId, "inv_emetteurid": $scope.currentUser.id, "message": res },
                          { "Content-Type": "application/json" }).then(function (s) { $scope.goRecherche(); }, function (e) { console.log(e); })
 
                     $http.delete('http://voulezvous.io/apiCRUD.php/users/' + $scope.currentUser.id,
@@ -1149,7 +1226,7 @@
                     $http.post('http://voulezvous.io/apiCRUD.php/users/',
                         {
                             "id": $scope.currentUser.id,
-                            "firstName": $scope.currentUser.firstName,
+                            "firstName": "changer",
                             "lastName": $scope.currentUser.lastName,
                             "email": $scope.currentUser.email,
                             "address": $scope.currentUser.address,
@@ -1160,7 +1237,7 @@
                             "birthDate": $scope.currentUser.birthDate,
                             "provider": $scope.currentUser.provider,
                             "providerId": $scope.currentUser.providerId,
-                            "availableCredits": $scope.currentUser.availableCredits,
+                            "availableCredits": parseInt($scope.currentUser.availableCredits) - parseInt(1),
                             "currentList": $scope.currentUser.currentList,
                             "filterActive": $scope.currentUser.filterActive,
                             "isSmoker": $scope.currentUser.isSmoker,

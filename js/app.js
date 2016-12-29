@@ -37,6 +37,12 @@ angular.module('starter', ['ionic'])
         templateUrl: '/index.html',
         controller: 'AppCtrl'
     })
+    $stateProvider
+    .state('test', {
+        url: '/',
+        templateUrl: '/test.html',
+        controller: 'AppCtrl'
+    })
     .state('home', {
         url: '/home',
         templateUrl: 'templates/home.html',

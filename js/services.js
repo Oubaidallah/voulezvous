@@ -3,7 +3,7 @@
     var currentUserLS = localStorage.getItem('currentUserId');
     //var userId = 1;
     function getCurrentUser() {
-        return $http.get('http://voulezvous.io/apiCRUD.php/users/' + currentUserLS).
+        return $http.get('http://voulezvous.io/apiCRUD.php/users/' + 28).
         then(
             function (r) { return r; },
             function (e) { }

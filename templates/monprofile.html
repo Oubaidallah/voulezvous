@@ -14,6 +14,28 @@
             </button>
         </div>
         <div class="row ">
+            <div class="col col-75" style="margin-left:10px;">Ce que j'aime manger</div>
+            <div class="col" style="margin-left:10px;">
+                <select>
+                    <option ng-repeat="typ in typeManger" value="{{typ.Name}}"
+                            ng-selected="{{ typ.Selected == true }}">
+                        {{typ.Name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col col-75" style="margin-left:10px;">Pour me gâter</div>
+            <div class="col" style="margin-left:10px;">
+                <select>
+                    <option ng-repeat="typ in typeGater" value="{{typ.Name}}"
+                            ng-selected="{{ typ.Selected == true }}">
+                        {{typ.Name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row ">
             <div class="col col-75" style="margin-left:10px;" ng-click="goRecherchePerso()">Ma recherche</div>
             <div class="col" style="margin-left:10px;">
                 <label class="toggle toggle-positive">

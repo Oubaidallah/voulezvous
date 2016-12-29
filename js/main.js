@@ -190,8 +190,17 @@ app.controller('voulezVousCtrl', function($scope,$http,$location,$anchorScroll,$
             $scope.personality += "P";
         }
 		alert($scope.personality);
-		alert(currentUser);
-		window.location.href = 'index.html';
+		//alert(currentUser);
+		
+		$http.post('http://voulezvous.io/api/postTest',
+            { "id": currentUser, "personality": $scope.personality },
+            { "Content-Type": "application/json" }).then(function (s) { 
+				alert(s);
+				//window.location.href = 'index.html';
+			}, function (e) { console.log(e); alert(e); })
+		
+		//alert(currentUser);
+		
         //$timeout(function () { document.getElementById('myForm').submit(); } , 1000);
         } 
 		

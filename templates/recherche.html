@@ -19,18 +19,18 @@
             </div>
         </div>
         <div>
-            <div id="divID" class="card" ng-repeat="p in personnes.users | filter:search |  filter:{id:'!'+currentUser.id}" >
+            <div id="divID" class="card" ng-repeat="r in res | filter:search" >
                 <div class="profileWrapper">
                     <div class="picHolder">
-                        <div class="close-btn"><a  ng-click="showList(p.id)">X</a></div>
-                        <img ng-src="{{p.imagePath}}" ng-click="goInvitDetails(p.id)">
-                        {{p.firstName}}
+                        <div class="close-btn"><a  ng-click="showList(r.id)">X</a></div>
+                        <img ng-src="{{r.imagePath}}" ng-click="goInvitDetails(r.id)">
+                        {{r.firstName}}
                     </div>
                 </div> 
                 <div class="options spaceIt">
-                    <div class="totem" ng-click="goInvitDetails(p.id)"><img src="img/icon.png"></div>
+                    <div class="totem" ng-click="goInvitDetails(r.id)"><img src="img/icon.png"></div>
                     <div class="messageBtnHolder" ng-controller="ProfCtrl">
-                        <a class="msgBtn" ng-click="sendInviRech()"><i class="fa fa-envelope"></i></a>
+                        <a class="msgBtn" ng-click="sendInviRech(r.id)"><i class="fa fa-envelope"></i></a>
                     </div>
                     <div class="clearfix"></div>
                 </div>

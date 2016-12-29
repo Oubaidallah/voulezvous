@@ -5,7 +5,7 @@
                 <img ng-src="{{personne.imagePath}}" ng-click="goMonprofile()">
             </div>
         </div>
-        <div class="list" >
+        <div class="list">
             <div class="item item-input-inset"> 
                 <label class="item-input-wrapper" >
                     <input type="text" placeholder="Pseudo" ng-model="personne.firstName">
@@ -13,14 +13,14 @@
             </div>
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
-                    <input type="text" placeholder="Profil MBTI : {{personne.profile}}" disabled>
+                    <input type="text" placeholder="Profil MBTI : {{resProfile.lettres}}" disabled>
                 </label>
-                <button class="button button-small button-positive" ng-click="goProfile()">
+                <button class="button button-small button-positive" ng-click="goTest()">
                      <i class="icon ion-loop"></i>
                 </button>
             </div>
             <div class="item item-input-inset">
-                    <textarea style="width: 300px; height: 100px;" placeholder="Description" class="form-control" ng-model="personne.description"></textarea>
+                    <textarea style="width: 300px; height: 100px;" placeholder="Décris toi" class="form-control" ng-model="personne.description"></textarea>
             </div>
         </div>
         <div class="button-full">

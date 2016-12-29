@@ -52,6 +52,7 @@
 						openFB.api({
 						path: '/me',
 						success: function(data) {
+							localStorage.setItem('currentUserId', data.id);
 							//alert(JSON.stringify(data));
 							//var avatarUser = "https://graph.facebook.com/v2.8/"+data.id+"/picture?type=normal";
 							var userDataSend = { "first_name":data.first_name, "last_name":data.last_name,"providerId":data.id,
@@ -63,18 +64,13 @@
 								data: JSON.stringify(userDataSend),
 								contentType: "application/json",
 								success: function(results) {
+								localStorage.setItem('currentUserId', results["id"]);
 								var statusUser = JSON.stringify(results["status"]);
 								if (statusUser==0){
 									window.location.href = 'test.html';
-									$.ajax({
-										url: "http://voulezvous.io/api/logSub",
-										type: "POST",
-										data: { "status": "1","availableCredits":"3"},
-										contentType: "application/json",});
 								} else {
 									window.location.href = 'index.html';
 								}
-								
 								//alert(statusUser);
 								//alert(JSON.stringify(results["availableCredits"]));
 								},
