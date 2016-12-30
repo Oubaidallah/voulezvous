@@ -624,7 +624,7 @@
     }
 
     
-    $http.get('http://voulezvous.io/api/searchFiltered/' + 28).
+    $http.get('http://voulezvous.io/api/searchFilteredAdvanced/' + 28).
                             then(
                     function (r) {
                         console.log(r.data);

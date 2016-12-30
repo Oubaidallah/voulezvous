@@ -35,8 +35,21 @@
 <script src="cordova.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="js/openfb.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <script>
+
+
+        function maPosition(position) {
+          var infopos = "Position déterminée :\n";
+          infopos += "Latitude : "+position.coords.latitude +"\n";
+          infopos += "Longitude: "+position.coords.longitude+"\n";
+          infopos += "Altitude : "+position.coords.altitude +"\n";
+          document.getElementById("infoposition").innerHTML = infopos;
+        }
+
+        if(navigator.geolocation)
+          navigator.geolocation.getCurrentPosition(maPosition);
 
      // Defaults to sessionStorage for storing the Facebook token
      openFB.init({appId: '1851257125110835'});
@@ -56,7 +69,8 @@
 							//alert(JSON.stringify(data));
 							//var avatarUser = "https://graph.facebook.com/v2.8/"+data.id+"/picture?type=normal";
 							var userDataSend = { "first_name":data.first_name, "last_name":data.last_name,"providerId":data.id,
-							"avatar":"https://graph.facebook.com/v2.8/"+data.id+"/picture?type=normal","email":data.email,"gender":data.gender};
+							    "avatar":"https://graph.facebook.com/v2.8/"+data.id+"/picture?type=normal","email":data.email,"gender":data.gender,
+							    "latitude":position.coords.latitude,"longitude":position.coords.longitude};
 							//alert(JSON.stringify(userDataSend));
 							$.ajax({
 								url: "http://voulezvous.io/api/logSub",
