@@ -13,7 +13,7 @@
             var userDataToSend = { "latitude": getLatitude, "longitude": getLongitude };
             //alert(JSON.stringify(userDataToSend));
             $.ajax({
-                url: "http://voulezvous.io/api/updateProfile/" + currentUserLS,
+                url: "http://voulezvous.io/api/updateProfile/" + 28,
                 type: "POST",
                 data: JSON.stringify(userDataToSend),
                 contentType: "application/json",

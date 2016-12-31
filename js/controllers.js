@@ -475,39 +475,13 @@
 
     $scope.editProfilee = function () {
 
-        $http.delete('http://voulezvous.io/apiCRUD.php/users/' + currentUserLS,
-        { "Content-Type": "application/json" }).then(function (s) { console.log(); }, function (e) { console.log(e); })
-
-        $http.post('http://voulezvous.io/apiCRUD.php/users',
+        $http.post('http://voulezvous.io/api/updateProfile/' + currentUserLS,
             {
-                "id": $scope.currentUser.id,
-                "firstName": $scope.currentUser.firstName,
-                "lastName": $scope.currentUser.lastName,
-                "email": $scope.currentUser.email,
-                "address": $scope.currentUser.address,
-                "country": $scope.currentUser.country,
-                "imagePath": $scope.currentUser.imagePath,
-                "gender": $scope.personne.gender,
-                "status": $scope.currentUser.status,
-                "birthDate": $scope.currentUser.birthDate,
-                "provider": $scope.currentUser.provider,
-                "providerId": $scope.currentUser.providerId,
-                "availableCredits": $scope.currentUser.availableCredits,
-                "currentList": $scope.currentUser.currentList,
-                "filterActive": $scope.currentUser.filterActive,
-                "isSmoker": $scope.currentUser.isSmoker,
-                "isDrinker": $scope.currentUser.isDrinker,
-                "hasKids": $scope.currentUser.hasKids,
-                "remember_token": $scope.currentUser.remember_token,
-                "created_at": $scope.currentUser.created_at,
-                "updated_at": $scope.currentUser.updated_at
+                "pseudo": $scope.personne.pseudo,
+                "description": $scope.personne.description
             },
             { "Content-Type": "application/json" }).then(function (s) {
-                $http.get('http://voulezvous.io/apiCRUD.php/users/' + currentUserLS + '?transform=1').
-                            then(
-                    function (r) { console.log(r.data); $scope.invitations = r.data;  },
-                    function (e) { console.log(e) }
-                )
+
             }, function (e) { console.log(e); })
         $scope.goMonprofile();
         window.location.reload(true);
