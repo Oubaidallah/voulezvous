@@ -6,6 +6,7 @@
 <body>
     
     <div id="infoposition"></div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="js/Location_Script.js"></script>
     <script>
@@ -15,6 +16,9 @@
           infopos += "Longitude: "+position.coords.longitude+"\n";
           infopos += "Altitude : "+position.coords.altitude +"\n";
           document.getElementById("infoposition").innerHTML = infopos;
+          alert(infopos);
+          localStorage.setItem('currentLatitude', position.coords.latitude);
+          localStorage.setItem('currentLongitude', position.coords.longitude);
         }
 
         if(navigator.geolocation)
