@@ -124,7 +124,7 @@
             function (e) { console.log(e) }
         )
 
-    $http.get('http://voulezvous.io/api/getProfile/' + 28  ).
+    $http.get('http://voulezvous.io/api/getProfile/' + currentUserLS).
         then(
             function (r) {
                 console.log(r.data);
@@ -624,7 +624,7 @@
     }
 
     
-    $http.get('http://voulezvous.io/api/searchFilteredAdvanced/' + 28).
+    $http.get('http://voulezvous.io/api/searchFilteredAdvanced/' + currentUserLS).
                             then(
                     function (r) {
                         console.log(r.data);
